@@ -170,6 +170,13 @@ body { margin: 0; }
 .turn { appearance: none; border: 0; background: transparent; color: var(--mute); box-shadow: inset 0 0 0 1px var(--line); border-radius: 10px; padding: 7px 10px; font: 500 13px var(--body); cursor: pointer; }
 .turn[aria-pressed="true"] { color: var(--brass); box-shadow: inset 0 0 0 1px var(--brass); }
 .turn:focus-visible { outline: 2px solid var(--brass); outline-offset: 2px; }
+.front .note { font-size: 13.5px; line-height: 1.4; color: #7a6a5c; font-style: italic; }
+.grp { display: grid; gap: 10px; }
+.grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; }
+.tile { appearance: none; border: 0; cursor: pointer; aspect-ratio: 1; border-radius: 10px; background: var(--ivory); color: var(--ink); font: 400 20px var(--display); }
+.tile.seen { opacity: .4; }
+.tile.cur { box-shadow: 0 0 0 2px var(--felt-deep), 0 0 0 4px var(--brass); opacity: 1; }
+.tile:focus-visible { outline: 2px solid var(--brass); outline-offset: 2px; }
 .card.flipped.turned { transform: rotateY(180deg) rotateZ(180deg); }
 </style>
 </head>
@@ -180,51 +187,94 @@ body { margin: 0; }
 
 <script>
 const LEVELS = [
-  { name: "Isınma", blurb: "Hafif sorularla başlıyoruz. Gülmek serbest." },
-  { name: "Derinleşme", blurb: "Biraz daha kişisel. Acele etmeyin." },
-  { name: "Yakınlık", blurb: "En samimi kısım. Dürüst olun, pas hakkınız hep var." }
+  { name: "Isınma", blurb: "Kolay sorular. Garson siparişi almaya gelene kadar bitirebilirsiniz." },
+  { name: "Derinleşme", blurb: "İşler biraz ciddileşiyor. Bir yudum su için, acele etmeyin." },
+  { name: "Yakınlık", blurb: "En samimi kısım. Buraya geldiyseniz buluşma fena gitmiyor demektir." }
 ];
 const Q = [
-  "Dünyadaki herhangi biriyle akşam yemeği yeme şansın olsa kimi davet ederdin?",
-  "Ünlü olmak ister miydin? Hangi alanda, nasıl?",
-  "Birini aramadan önce ne söyleyeceğinin provasını yapar mısın? Neden?",
-  "Senin için “mükemmel” bir gün nasıl olurdu?",
-  "En son ne zaman kendi kendine şarkı söyledin? Peki başka birine?",
-  "90 yaşına kadar yaşasan ve son 60 yıl boyunca 30 yaşındaki birinin ya zihnine ya da bedenine sahip olabilsen, hangisini seçerdin?",
-  "Nasıl öleceğine dair gizli bir önsezin var mı?",
-  "Karşındakiyle ortak gibi görünen üç şey söyle.",
+  "Dünyadaki herkes arasından birini akşam yemeğine çağırabilsen kimi çağırırdın?",
+  "Ünlü olmak ister miydin? Neyle ünlü olmak isterdin?",
+  "Birini telefonla aramadan önce ne diyeceğini kafanda prova eder misin? Neden?",
+  "Senin için kusursuz bir gün nasıl geçerdi? Sabahtan akşama anlat.",
+  "En son ne zaman kendi kendine şarkı söyledin? Peki birine?",
+  "90 yaşına kadar yaşayacaksın. Son 60 yıl boyunca ya 30 yaşındaki zihnin ya da 30 yaşındaki bedenin seninle kalacak. Hangisini seçerdin?",
+  "Nasıl öleceğine dair içten içe bir tahminin var mı?",
+  "Aranızda ortak olduğunu düşündüğün üç şey söyle.",
   "Hayatında en çok neye minnettarsın?",
-  "Yetiştirilme biçiminde bir şeyi değiştirebilseydin ne olurdu?",
-  "Hayat hikâyeni karşındakine olabildiğince ayrıntılı anlat. Sırayla, ikiniz de dörder dakika.",
-  "Yarın sabah yeni bir özellik ya da yetenekle uyanabilseydin bu ne olurdu?",
-  "Bir kristal küre sana kendin, hayatın ya da gelecek hakkında gerçeği söyleyebilseydi neyi bilmek isterdin?",
-  "Uzun zamandır yapmayı hayal ettiğin bir şey var mı? Neden henüz yapmadın?",
+  "Nasıl yetiştirildiğinle ilgili bir şeyi değiştirebilseydin bu ne olurdu?",
+  "Hayat hikâyeni olabildiğince ayrıntılı anlat. Her birinize dört dakika.",
+  "Yarın sabah yeni bir yetenek ya da özellikle uyanabilsen bu ne olurdu?",
+  "Bir kristal küre sana kendinle, hayatınla ya da gelecekle ilgili her şeyin doğrusunu söyleyebilse ona ne sorardın?",
+  "Uzun zamandır yapmayı hayal ettiğin bir şey var mı? Neden hâlâ yapmadın?",
   "Hayatındaki en büyük başarın ne?",
   "Bir arkadaşlıkta en çok neye değer verirsin?",
-  "En değerli anın hangisi?",
-  "En kötü anın hangisi?",
-  "Bir yıl sonra aniden öleceğini bilseydin şu anki yaşayışında bir şey değiştirir miydin? Neden?",
-  "Arkadaşlık senin için ne ifade ediyor?",
-  "Sevgi ve şefkat hayatında nasıl bir rol oynuyor?",
-  "Sırayla, karşındakinde olumlu bulduğun bir özelliği söyleyin. Her biriniz toplam beş tane.",
-  "Ailen ne kadar yakın ve sıcak? Çocukluğunun çoğu insanınkinden mutlu geçtiğini düşünüyor musun?",
-  "Annenle ilişkin hakkında ne hissediyorsun?",
-  "Her biriniz “biz” ile başlayan üç doğru cümle kursun. Örneğin: “Şu an ikimiz de bu masadayız ve … hissediyoruz.”",
+  "Hayatındaki en değerli anı hangisi?",
+  "Hayatındaki en kötü anı hangisi?",
+  "Bir yıl sonra aniden öleceğini bilsen şu anki hayatında neyi değiştirirdin? Neden?",
+  "Arkadaşlık senin için ne demek?",
+  "Sevgi ve şefkat hayatında ne kadar yer tutuyor?",
+  "Sırayla, karşındakinde sevdiğin bir özelliği söyleyin. Her biriniz beşer tane.",
+  "Ailen ne kadar yakın ve sıcak? Çocukluğunun çoğu insanınkinden daha mutlu geçtiğini düşünüyor musun?",
+  "Annenle ilişkini nasıl anlatırsın?",
+  "Her biriniz “biz” ile başlayan üç doğru cümle kursun. Mesela: “İkimiz de şu an bu masadayız ve biraz heyecanlıyız.”",
   "Şu cümleyi tamamla: “Keşke … paylaşabileceğim biri olsa.”",
-  "Yakın arkadaş olacak olsaydınız, karşındakinin senin hakkında bilmesi gereken en önemli şey ne olurdu?",
-  "Karşındakine onda neyi sevdiğini söyle. Bu sefer çok dürüst ol; yeni tanıştığın birine söylemeyeceğin şeyleri söyle.",
-  "Hayatındaki utanç verici bir anı paylaş.",
+  "Yakın arkadaş olsaydınız, karşındakinin senin hakkında bilmesi gereken en önemli şey ne olurdu?",
+  "Karşındakine onda neyi beğendiğini söyle. Bu sefer çok dürüst ol; yeni tanıştığın birine normalde söylemeyeceğin şeyleri söyle.",
+  "Hayatındaki utanç verici bir anı anlat.",
   "En son ne zaman birinin yanında ağladın? Peki yalnızken?",
   "Karşındakine, onda şimdiden sevdiğin bir şeyi söyle.",
-  "Sence şakası yapılamayacak kadar ciddi bir şey var mı? Varsa ne?",
-  "Bu akşam kimseyle konuşamadan ölecek olsaydın, birine söylemediğin için en çok neye pişman olurdun? Neden henüz söylemedin?",
-  "Evin, içindeki her şeyle birlikte yanıyor. Sevdiklerini ve evcil hayvanlarını kurtardın; tek bir eşya için son kez içeri girebilirsin. Ne alırdın? Neden?",
-  "Ailendeki herkes arasında kimin ölümü seni en çok sarsardı? Neden?",
-  "Kişisel bir sorununu paylaş ve karşındakine onun yerinde olsa ne yapacağını sor. Sonra seçtiğin sorun hakkında nasıl hissediyor göründüğünü sana anlatmasını iste."
+  "Sence şakası yapılamayacak kadar ciddi bir şey var mı? Neler?",
+  "Bu akşam kimseyle konuşamadan ölecek olsan, birine söylemediğin için en çok neye pişman olurdun? Neden hâlâ söylemedin?",
+  "Evin, içindeki her şeyle birlikte yanıyor. Sevdiklerini ve evcil hayvanlarını kurtardın. Tek bir eşya için son bir kez içeri girebilirsin. Neyi alırdın? Neden?",
+  "Ailende kimi kaybetmek seni en çok sarsardı? Neden?",
+  "Kişisel bir sorununu anlat ve karşındakine onun yerinde olsa ne yapacağını sor. Sonra seçtiğin sorun hakkında nasıl hissediyor göründüğünü sana anlatmasını iste."
+];
+const NOTES = [
+  "Ölü ya da diri, fark etmez. “Annem” demek serbest ama biraz kolaya kaçış.",
+  "Bir videoyla viral olmak da sayılır mı, onu siz tartışın.",
+  "Restorana rezervasyon için ararken bile mi?",
+  "Bu akşamın o güne dahil olup olmadığını sormuyoruz. Şimdilik.",
+  "Duşta söylenenler de sayılır. Hangi şarkıydı?",
+  "Diz ağrısı mı, unutkanlık mı? Zor seçim.",
+  "Evet, ilk buluşma için biraz karanlık. Bunu biz değil, 1997'de bir psikolog seçti.",
+  "“İkimiz de şu an bu masadayız” kolaya kaçmak olur.",
+  "“Wi-Fi” cevabı teknik olarak doğru ama puan almaz.",
+  "Aileyi suçlama değil, merak etme sorusu.",
+  "Doğumdan bu akşama kadar. Sayacı başlatın, kısa kesmek yok.",
+  "Uçmak klişe ama geçerli.",
+  "Bu buluşmanın sonunu sormak serbest. Cesaret ister.",
+  "“Spor salonuna başlamak” kabul edilir ama alkış almaz.",
+  "Bu akşam alçakgönüllülük yasak. Övünün.",
+  "Not almak serbest, ileride işe yarayabilir.",
+  "Acele etmeyin, güzel bir anı düşünmeye değer.",
+  "Ağır bir soru. Anlatmak istemezsen pas tam bunun için var.",
+  "Cevabın “hiçbir şey” ise ya çok iyisin ya da kendini kandırıyorsun.",
+  "16. soruya benziyor ama aynı değil. Psikolog ısrar etmiş.",
+  "Sadece romantik olanı değil; aile, arkadaşlar, kedin de dahil.",
+  "“Gözlerin güzel” bir tanesi olabilir. Beşi birden olamaz.",
+  "Burada doğru cevap yok, sadece merak var.",
+  "Hassas bir konu olabilir. Pas her zaman masada.",
+  "Doğru olsun yeter, romantik olmak zorunda değil.",
+  "“Netflix şifresi” de bir cevap. Ama daha iyisini bulabilirsiniz.",
+  "Kendi kullanım kılavuzunun ilk sayfası gibi düşün.",
+  "Yanaklar kızarabilir. Normal, devam.",
+  "Ne kadar utanç verici, o kadar iyi. Gülmek serbest, dalga geçmek yasak.",
+  "Film sahneleri sayılır. Hangi film olduğunu da söyle.",
+  "“Şimdiden” diyoruz, yani bu akşam fark ettiğin bir şey.",
+  "Kimin mizahı kaldırabildiğini öğrenmenin tam zamanı.",
+  "Bu sorudan sonra o kişiye mesaj atmak serbest. Oyun bekler.",
+  "“Telefon” diyenler, şarj aletini de unutmayın.",
+  "Ağır bir soru. Son düzlüktesiniz, az kaldı.",
+  "Son kart. Dinlemek, cevap vermek kadar önemli."
+];
+const PASS_LINES = [
+  "Kart destenin sonuna gitti. Kaçamazsınız, sadece erteleyebilirsiniz.",
+  "Pas! Bu kart birazdan geri gelecek.",
+  "Sorun değil. Herkesin bir “şimdi değil” sorusu vardır."
 ];
 const TIMED = { 10: 240 }; // question index -> seconds
 const EYE_SECONDS = 240;
-const KEY = "36soru.v1";
+const KEY = "36soru.v2";
 
 const app = document.getElementById("app");
 let S = fresh();
@@ -232,7 +282,7 @@ let tick = null;
 let wakeLock = null;
 
 function fresh() {
-  return { screen: "start", names: ["", ""], level: 0, order: [[], [], []], pos: 0, flipped: false, passes: 0, timer: null };
+  return { screen: "start", names: ["", ""], level: 0, order: [[], [], []], pos: 0, flipped: false, passes: 0, seen: [], reads: 0, timer: null };
 }
 function deckFor(l) { return Array.from({ length: 12 }, (_, i) => l * 12 + i); }
 function save() { try { localStorage.setItem(KEY, JSON.stringify({ ...S, timer: null })); } catch (e) {} }
@@ -240,7 +290,6 @@ function load() { try { const s = JSON.parse(localStorage.getItem(KEY)); return 
 function clear() { try { localStorage.removeItem(KEY); } catch (e) {} }
 function name(i) { return (S.names[i] || "").trim() || (i === 0 ? "1. kişi" : "2. kişi"); }
 function esc(s) { return String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]); }
-function done() { return S.order.slice(0, S.level).reduce((a, d) => a + d.length, 0) + S.pos; }
 function fmt(s) { const m = Math.floor(s / 60), r = s % 60; return m + ":" + String(r).padStart(2, "0"); }
 
 async function keepAwake() {
@@ -251,7 +300,7 @@ document.addEventListener("visibilitychange", () => { if (document.visibilitySta
 function go(screen) { stopTimer(); S.screen = screen; save(); render(); }
 
 function render() {
-  const r = { start: Start, level: Level, play: Play, eye: Eye, end: End }[S.screen];
+  const r = { start: Start, level: Level, play: Play, list: List, eye: Eye, end: End }[S.screen];
   app.innerHTML = r();
   bind();
 }
@@ -262,11 +311,11 @@ function Start() {
   return `<section class="screen">
     <p class="eyebrow">İlk buluşma için kart oyunu</p>
     <h1>36 <em>Soru</em></h1>
-    <p class="lede">Psikolog Arthur Aron'un yakınlık deneyindeki 36 soru, masada ikinizin arasında duran tek bir telefonda.</p>
+    <p class="lede">Psikolog Arthur Aron 1997'de iki yabancıyı 45 dakikada yakınlaştırmak için bu soruları hazırladı. Sizin elinizde bir akşam ve tek bir telefon var.</p>
     <ul class="rules">
       <li><b>1</b><span>Telefonu ortaya koyun. Kartı çevirmek için dokunun.</span></li>
       <li><b>2</b><span>Sırayla okuyun. Okuyan önce cevaplar, sonra diğeri.</span></li>
-      <li><b>3</b><span>Üç seviye var, sorular giderek samimileşir. Hazır değilseniz pas geçin, kart destenin sonuna gider.</span></li>
+      <li><b>3</b><span>Üç seviye var, sorular giderek samimileşir. Hazır değilseniz pas deyin. Canınız istediği karta da atlayabilirsiniz.</span></li>
       <li><b>4</b><span>Sonunda 4 dakika konuşmadan göz göze bakarsınız.</span></li>
     </ul>
     <div class="names">
@@ -275,7 +324,7 @@ function Start() {
     </div>
     <div class="spacer"></div>
     <div class="stack">
-      ${resume ? `<button class="btn" data-a="resume">Kaldığınız yerden devam edin (${saved.order.slice(0, saved.level).reduce((a, d) => a + d.length, 0) + saved.pos}/36)</button>
+      ${resume ? `<button class="btn" data-a="resume">Kaldığınız yerden devam edin (${(saved.seen || []).length}/36)</button>
       <button class="btn ghost" data-a="start">Baştan başlayın</button>` : `<button class="btn" data-a="start">Oyuna başlayın</button>`}
     </div>
     <p class="credit">Sorular: Aron, A. ve ark. (1997), “The Experimental Generation of Interpersonal Closeness”. Türkçe uyarlama. Hiçbir veri toplanmaz, ilerlemeniz sadece bu telefonda saklanır.</p>
@@ -293,6 +342,7 @@ function Level() {
     <div class="spacer"></div>
     <div class="stack" style="width:100%">
       <button class="btn" data-a="begin">12 kartı açın</button>
+      <button class="link" data-a="list">Tüm kartları görün</button>
       <button class="link" data-a="home">Ana sayfa</button>
     </div>
   </section>`;
@@ -301,13 +351,13 @@ function Level() {
 function Play() {
   const deck = S.order[S.level];
   const qi = deck[S.pos];
-  const reader = done() % 2;
+  const reader = (S.reads || 0) % 2;
   const t = TIMED[qi];
-  const pct = (done() / 36) * 100;
+  const pct = (S.seen.length / 36) * 100;
   return `<section class="screen">
     <div class="bar">
-      <div class="pips">${LEVELS.map((_, i) => `<span class="${i <= S.level ? "on" : ""}"></span>`).join("")}</div>
-      <div class="right"><span class="count">${S.pos + 1}/12</span><button class="turn" data-a="turn" aria-pressed="${S.turned ? "true" : "false"}" aria-label="Kartı karşıdaki kişiye çevir">↻ Karşıya çevir</button></div>
+      <button class="turn" data-a="list" aria-label="Tüm kartlar">☰ Seviye ${S.level + 1} · ${S.pos + 1}/12</button>
+      <div class="right"><button class="turn" data-a="turn" aria-pressed="${S.turned ? "true" : "false"}" aria-label="Kartı karşıdaki kişiye çevir">↻ Karşıya çevir</button></div>
     </div>
     <div class="progress"><i style="width:${pct}%"></i></div>
     <div class="table">
@@ -316,17 +366,28 @@ function Play() {
         <div class="face front">
           <div class="top"><span>Seviye ${S.level + 1}</span><span class="num">${qi + 1}</span></div>
           <div class="q">${esc(Q[qi])}</div>
+          <div class="note">${esc(NOTES[qi])}</div>
           ${t ? `<div class="timer-row"><button class="btn small" data-a="timer">${S.timer ? "Durdur" : "Sayacı başlat"}</button><span class="clock" id="clock">${fmt(S.timer ? S.timer.left : t)}</span></div>` : ""}
           <div class="who">Okuyan ve önce cevaplayan: <b>${esc(name(reader))}</b></div>
         </div>
       </div>
     </div>
     <div class="controls">
-      <button class="btn ghost small" data-a="back" ${done() === 0 ? "disabled" : ""} aria-label="Önceki kart">←</button>
+      <button class="btn ghost small" data-a="back" ${S.level === 0 && S.pos === 0 ? "disabled" : ""} aria-label="Önceki kart">←</button>
       <button class="btn ghost" data-a="pass" ${!S.flipped || S.pos === deck.length - 1 ? "disabled" : ""}>Pas</button>
       <button class="btn" data-a="next" ${!S.flipped ? "disabled" : ""}>Sonraki</button>
     </div>
     <p class="toast" id="toast">${S.flipped ? "" : "Kartı çevirince butonlar açılır"}</p>
+  </section>`;
+}
+
+function List() {
+  const cur = S.prev === "play" ? S.order[S.level][S.pos] : -1;
+  return `<section class="screen">
+    <div class="bar"><h2 style="font-size:30px">Tüm kartlar</h2><button class="btn ghost small" data-a="close">Kapat</button></div>
+    <p class="lede" style="font-size:15px">İstediğiniz karta atlayın. Açtıklarınız soluk görünür.</p>
+    ${LEVELS.map((L, l) => `<div class="grp"><p class="eyebrow">Seviye ${l + 1} · ${L.name}</p><div class="grid">${deckFor(l).map(q =>
+      `<button class="tile ${S.seen.includes(q) ? "seen" : ""} ${q === cur ? "cur" : ""}" data-a="jump" data-q="${q}" aria-label="Soru ${q + 1}">${q + 1}</button>`).join("")}</div></div>`).join("")}
   </section>`;
 }
 
@@ -336,7 +397,7 @@ function Eye() {
   return `<section class="screen center">
     <p class="eyebrow">Son adım</p>
     <h2>4 dakika, hiç konuşmadan</h2>
-    <p class="lede">Telefonu kenara bırakın ve birbirinizin gözlerine bakın. Gülmek normal, devam edin.</p>
+    <p class="lede">Telefonu kenara bırakın ve birbirinizin gözlerine bakın. Garip gelecek. Gülmek serbest, kaçmak yasak.</p>
     <div class="ring">
       <svg viewBox="0 0 100 100" aria-hidden="true">
         <circle cx="50" cy="50" r="46" fill="none" stroke="rgba(243,236,223,.14)" stroke-width="3"></circle>
@@ -358,7 +419,7 @@ function End() {
     <div class="spacer"></div>
     <p class="eyebrow">Bitti</p>
     <h1 style="font-size:64px">36 / <em>36</em></h1>
-    <p class="lede">${esc(name(0))} ve ${esc(name(1))}, tüm soruları birlikte geçtiniz${S.passes ? `, ${S.passes} kez pas dediniz` : ""}. Gerisi size kalmış.</p>
+    <p class="lede">${esc(name(0))} ve ${esc(name(1))}, 36 soruyu birlikte bitirdiniz${S.passes ? ` (${S.passes} pas dahil, kimseye söylemeyiz)` : ""}. Deneydeki çiftlerden biri altı ay sonra evlenmiş. Baskı yapmıyoruz, sadece söylüyoruz.</p>
     <div class="spacer"></div>
     <div class="stack" style="width:100%">
       <button class="btn" data-a="restart">Yeniden oynayın</button>
@@ -382,7 +443,7 @@ function pauseTimer() { stopTimer(); if (S.timer) S.timer = { left: S.timer.left
 
 function buzz() { try { navigator.vibrate && navigator.vibrate([200, 100, 200]); } catch (e) {} }
 
-function act(a) {
+function act(a, el) {
   if (a === "start") {
     const n = [document.getElementById("n0")?.value || "", document.getElementById("n1")?.value || ""];
     S = fresh(); S.names = n; S.order = [0, 1, 2].map(deckFor);
@@ -392,15 +453,22 @@ function act(a) {
   } else if (a === "home") { stopTimer(); S.screen = "start"; render(); }
   else if (a === "begin") { S.pos = 0; S.flipped = false; go("play"); }
   else if (a === "turn") { S.turned = !S.turned; save(); render(); }
-  else if (a === "flip") { if (!S.flipped) { S.flipped = true; save(); render(); } }
+  else if (a === "flip") { if (!S.flipped) { S.flipped = true; const q = S.order[S.level][S.pos]; if (!S.seen.includes(q)) S.seen.push(q); save(); render(); } }
+  else if (a === "list") { stopTimer(); S.timer = null; S.prev = S.screen; S.screen = "list"; render(); window.scrollTo(0, 0); }
+  else if (a === "close") { go(S.prev || "play"); }
+  else if (a === "jump") {
+    const q = +el.dataset.q, l = Math.floor(q / 12);
+    S.level = l; S.pos = S.order[l].indexOf(q); S.flipped = false; S.turned = false; S.reads = (S.reads || 0) + 1; go("play");
+  }
   else if (a === "next") { S.timer = null; advance(); }
   else if (a === "pass") {
     const d = S.order[S.level]; const [c] = d.splice(S.pos, 1); d.push(c);
     S.passes++; S.flipped = false; S.turned = false; S.timer = null; save(); render();
-    const t = document.getElementById("toast"); if (t) t.textContent = "Kart destenin sonuna gitti.";
+    const t = document.getElementById("toast"); if (t) t.textContent = PASS_LINES[S.passes % PASS_LINES.length];
   } else if (a === "back") {
     S.timer = null;
     if (S.pos > 0) S.pos--; else if (S.level > 0) { S.level--; S.pos = 11; }
+    S.reads = Math.max(0, (S.reads || 0) - 1); S.turned = false;
     S.flipped = true; go("play");
   } else if (a === "timer") {
     if (tick) { pauseTimer(); render(); }
@@ -425,14 +493,14 @@ function act(a) {
 }
 
 function advance() {
-  S.flipped = false; S.turned = false;
+  S.flipped = false; S.turned = false; S.reads = (S.reads || 0) + 1;
   if (S.pos < 11) { S.pos++; go("play"); }
   else if (S.level < 2) { S.level++; S.pos = 0; go("level"); }
   else { S.pos = 12; S.level = 2; go("eye"); }
 }
 
 function bind() {
-  app.querySelectorAll("[data-a]").forEach(b => b.addEventListener("click", e => { e.stopPropagation(); act(b.dataset.a); }));
+  app.querySelectorAll("[data-a]").forEach(b => b.addEventListener("click", e => { e.stopPropagation(); act(b.dataset.a, b); }));
   const card = document.getElementById("card");
   if (card) {
     card.addEventListener("click", () => act("flip"));
