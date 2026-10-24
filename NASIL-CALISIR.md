@@ -19,7 +19,7 @@ Aslında HTML'in büyük kısmı da JavaScript tarafından üretiliyor. Sayfada 
 Uygulamanın kalbi iki şey:
 
 1. **`S` adlı bir nesne (state/durum).** Oyunun o anki her bilgisi burada durur:
-   - `screen`: hangi ekrandayız (`start`, `level`, `play`, `menu`, `eye`, `end`)
+   - `screen`: hangi ekrandayız (`start`, `intro`, `level`, `play`, `menu`, `eye`, `end`)
    - `names`: iki oyuncunun ismi
    - `level`: kaçıncı seviye (0, 1, 2)
    - `seen`: açılmış kartlar, `passed`: pas geçilen kartlar
@@ -35,7 +35,8 @@ Akış hep aynı: **kullanıcı bir şeye dokunur → `act()` fonksiyonu `S`'yi 
 
 Her butonda `data-a="next"`, `data-a="pass"` gibi bir etiket var. `bind()` fonksiyonu, her çizimden sonra bu butonlara "tıklanınca `act(etiket)` çalıştır" der. `act()` içinde de her etiket için ne yapılacağı yazıyor:
 
-- `start`: isimleri alır, desteleri hazırlar, 1. seviye ekranına geçer
+- `intro`: "Nasıl oynanır?" ekranını açar
+- `ready`: isimleri alır, oyunu sıfırdan başlatır, 1. seviye ekranına geçer
 - `flip`: kartı açar
 - `next`: sonraki karta geçer; seviye bittiyse sonraki seviyeye, 36 bittiyse göz teması ekranına
 - `pass`: kartı `passed` listesine ekler ve sonrakine geçer. 36 soru bitince pas geçilen kartlar "Son tur" olarak geri gelir
@@ -50,6 +51,8 @@ Script'in en başında:
 - `LEVELS`: üç seviyenin adı ve kısa açıklaması
 - `Q`: 36 sorunun listesi, sırayla. **Bir soruyu düzeltmek için sadece bu metni değiştirmen yeterli.**
 - `NOTES`: her kartın altındaki küçük not, `Q` ile aynı sırada
+- `FAQ`: ana sayfadaki "Merak edilenler" soru-cevapları
+- `ICONS`: "Nasıl oynanır?" ekranındaki çizgi ikonlar (SVG)
 - `TIMED`: hangi soruda sayaç olacağı. `{ 10: 240 }` "11. soruda 240 saniye" demek (programlamada sayma 0'dan başladığı için 11. soru 10 numaradır).
 - `EYE_SECONDS`: son göz teması süresi (240 saniye = 4 dakika)
 
@@ -69,9 +72,10 @@ Script'in en başında:
 | Soru metnini düzeltmek | `Q` listesi |
 | Seviye adını değiştirmek | `LEVELS` |
 | Sayaç süresi | `TIMED` ve `EYE_SECONDS` |
-| Renkler | `<style>` en üstündeki `:root` bloğu (`--wine`, `--blush`, `--crimson` vb.) |
+| Renkler | `<style>` en üstündeki `:root` bloğu (`--bg`, `--rose`, `--wine` vb.) |
 | Yazı tipleri | En üstteki Google Fonts linki ve `--display`, `--body` |
 | Başlangıç ekranındaki yazılar | `Start()` fonksiyonu |
+| "Nasıl oynanır?" ve isim ekranı | `Intro()` fonksiyonu |
 
 ## Bir şey bozulursa
 

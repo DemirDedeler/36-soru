@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>36 Soru · İlk buluşma kart oyunu</title>
 <meta name="description" content="İlk buluşmada tek telefonla oynanan kart oyunu. Psikolog Arthur Aron'un insanları birbirine yakınlaştıran 36 sorusu, Türkçe.">
-<meta name="theme-color" content="#14060a">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect x='10' y='4' width='44' height='56' rx='8' fill='%23f7ece6'/%3E%3Ctext x='32' y='42' font-family='Georgia,serif' font-size='24' text-anchor='middle' fill='%23a3253a'%3E36%3C/text%3E%3C/svg%3E">
+<meta name="theme-color" content="#f8dcd5">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect x='10' y='4' width='44' height='56' rx='8' fill='%23b8364c'/%3E%3Ctext x='32' y='42' font-family='Georgia,serif' font-size='24' font-style='italic' text-anchor='middle' fill='%23fffaf7'%3E36%3C/text%3E%3C/svg%3E">
 <meta property="og:type" content="website">
 <meta property="og:title" content="36 Soru">
 <meta property="og:description" content="İlk buluşmada tek telefonla oynanan kart oyunu. İnsanları birbirine yakınlaştıran 36 soru.">
@@ -19,29 +19,29 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Manrope:wght@400;500;700&display=swap">
 <style>
-/* Layout: one phone on a dim restaurant table. A blush-ivory card on deep wine velvet; everything around it stays quiet. Dark by choice so the screen never glares across the table. */
+/* Layout: one phone on a restaurant table. A cream card on soft blush, deep wine type; the rose-red card back is the one bold note. */
 :root {
-  --wine: #3a1220;
-  --wine-deep: #14060a;
-  --ivory: #f7ece6;
-  --ink: #2b1418;
-  --blush: #e7a99a;
-  --crimson: #a3253a;
-  --mute: #c7a3a6;
-  --card-mute: #84605f;
-  --line: rgba(247,236,230,.14);
+  --bg: #f8dcd5;
+  --bg-2: #f1bfb5;
+  --ink: #4a1622;
+  --mute: #7d4552;
+  --rose: #b8364c;
+  --wine: #6b1d2e;
+  --card: #fffaf7;
+  --card-mute: #8f6064;
+  --line: rgba(74,22,34,.14);
   --display: "DM Serif Display", Georgia, "Times New Roman", serif;
   --body: "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
-  color-scheme: dark;
+  color-scheme: light;
 }
 *, *::before, *::after { box-sizing: border-box; }
-html, body { height: 100%; }
-html { padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); background: var(--wine-deep); }
+html, body { min-height: 100%; }
+html { padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); background: var(--bg-2); }
 [hidden] { display: none !important; }
 body {
   margin: 0;
-  background: radial-gradient(120% 80% at 50% 20%, var(--wine) 0%, var(--wine-deep) 100%) top / 100% 100vh no-repeat, var(--wine-deep);
-  color: var(--ivory);
+  background: radial-gradient(130% 70% at 50% 0%, #fdebe6 0%, var(--bg) 55%, var(--bg-2) 100%) top / 100% 100vh no-repeat, var(--bg-2);
+  color: var(--ink);
   font-family: var(--body);
   font-size: 16px;
   line-height: 1.5;
@@ -58,50 +58,70 @@ body {
   gap: 18px;
 }
 .screen { display: flex; flex-direction: column; gap: 18px; flex: 1; }
-h1, h2 { font-family: var(--display); font-weight: 400; margin: 0; text-wrap: balance; line-height: 1.1; }
-h1 { font-size: clamp(56px, 18vw, 84px); letter-spacing: -.01em; }
-h1 em, h2 em { color: var(--blush); font-style: italic; }
+h1, h2, h3 { font-family: var(--display); font-weight: 400; margin: 0; text-wrap: balance; line-height: 1.1; }
+h1 { font-size: clamp(60px, 19vw, 88px); letter-spacing: -.01em; }
+h1 em, h2 em { color: var(--rose); font-style: italic; }
 h2 { font-size: 34px; }
 p { margin: 0; }
 .lede { color: var(--mute); font-size: 17px; max-width: 34ch; }
-.eyebrow { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--blush); font-weight: 700; }
+.eyebrow { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--rose); font-weight: 700; }
+.meta { color: var(--mute); font-size: 13px; text-align: center; }
 
 .btn {
   appearance: none; border: 0; cursor: pointer;
   font: 700 16px/1 var(--body);
-  padding: 17px 20px; border-radius: 14px;
-  background: var(--blush); color: var(--wine-deep);
+  padding: 18px 20px; border-radius: 14px;
+  background: var(--wine); color: #fff4f1;
+  box-shadow: 0 10px 24px -14px rgba(107,29,46,.7);
   transition: transform .12s ease, opacity .2s;
 }
 .btn:active { transform: scale(.98); }
-.btn.ghost { background: transparent; color: var(--ivory); box-shadow: inset 0 0 0 1px var(--line); }
+.btn.ghost { background: transparent; color: var(--ink); box-shadow: inset 0 0 0 1px var(--line); }
 .btn.small { padding: 12px 14px; font-size: 14px; border-radius: 12px; }
 .btn[disabled] { opacity: .35; cursor: default; }
 .link { background: none; border: 0; color: var(--mute); font: 500 14px var(--body); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; padding: 6px 0; }
-.chip { appearance: none; border: 0; background: transparent; color: var(--mute); box-shadow: inset 0 0 0 1px var(--line); border-radius: 10px; padding: 8px 11px; font: 500 13px var(--body); cursor: pointer; }
-.chip[aria-pressed="true"] { color: var(--blush); box-shadow: inset 0 0 0 1px var(--blush); }
-.btn:focus-visible, .chip:focus-visible, .link:focus-visible, .card:focus-visible, .qrow:focus-visible, .field input:focus-visible { outline: 2px solid var(--blush); outline-offset: 3px; }
-
-.names { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-.field { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
-.field label { font-size: 12px; color: var(--mute); letter-spacing: .08em; text-transform: uppercase; }
-.field input {
-  width: 100%;
-  background: rgba(0,0,0,.25); color: var(--ivory);
-  border: 1px solid var(--line); border-radius: 12px;
-  padding: 13px 14px; font: 500 16px var(--body);
-}
-.field input::placeholder { color: var(--mute); opacity: .7; }
-.rules { display: grid; gap: 12px; padding: 0; margin: 0; list-style: none; }
-.rules li { display: grid; grid-template-columns: 26px 1fr; gap: 10px; font-size: 15px; }
-.rules b { font-family: var(--display); font-weight: 400; color: var(--blush); font-size: 20px; line-height: 1.1; }
+.chip { appearance: none; border: 0; background: rgba(255,255,255,.35); color: var(--ink); box-shadow: inset 0 0 0 1px var(--line); border-radius: 10px; padding: 8px 11px; font: 500 13px var(--body); cursor: pointer; }
+.chip[aria-pressed="true"] { color: var(--rose); box-shadow: inset 0 0 0 1.5px var(--rose); }
+.btn:focus-visible, .chip:focus-visible, .link:focus-visible, .card:focus-visible, .qrow:focus-visible, .couple input:focus-visible, summary:focus-visible { outline: 2px solid var(--rose); outline-offset: 3px; }
 .spacer { flex: 1; }
 .stack { display: grid; gap: 10px; width: 100%; }
 .credit { color: var(--mute); font-size: 12px; line-height: 1.5; }
 
+/* start */
+.hero { display: flex; flex-direction: column; gap: 18px; padding-top: 6vh; }
+.fan { position: relative; height: 150px; margin: 4px 0 6px; }
+.fan i { position: absolute; left: 50%; top: 8px; width: 92px; height: 128px; margin-left: -46px; border-radius: 12px; box-shadow: 0 14px 28px -16px rgba(107,29,46,.55); }
+.fan i:nth-child(1) { background: var(--rose); transform: rotate(-14deg) translateX(-48px); }
+.fan i:nth-child(2) { background: var(--card); transform: translateY(-6px); z-index: 2; }
+.fan i:nth-child(3) { background: var(--wine); transform: rotate(14deg) translateX(48px); }
+.fan i:nth-child(2)::after { content: "36"; position: absolute; inset: 0; display: grid; place-items: center; font: italic 400 38px var(--display); color: var(--rose); }
+.faq { display: grid; gap: 4px; padding-top: 34px; }
+.faq h2 { font-size: 28px; margin-bottom: 8px; }
+details { border-top: 1px solid var(--line); }
+details:last-of-type { border-bottom: 1px solid var(--line); }
+summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 14px; padding: 16px 2px; font-weight: 700; font-size: 15.5px; }
+summary::-webkit-details-marker { display: none; }
+summary::after { content: "+"; flex: none; width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; background: rgba(255,255,255,.5); color: var(--rose); font-size: 18px; font-weight: 500; transition: transform .2s ease; }
+details[open] summary::after { transform: rotate(45deg); }
+details p { padding: 0 2px 18px; color: var(--mute); font-size: 15px; max-width: 60ch; }
+
+/* intro */
+.steps { display: grid; gap: 14px; padding: 0; margin: 0; list-style: none; }
+.steps li { display: grid; grid-template-columns: 52px 1fr; gap: 14px; align-items: center; font-size: 15.5px; }
+.steps svg { width: 52px; height: 52px; padding: 10px; border-radius: 16px; background: rgba(255,255,255,.55); color: var(--rose); }
+.couple { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 8px; }
+.couple input {
+  width: 100%; min-width: 0;
+  background: rgba(255,255,255,.6); color: var(--ink);
+  border: 1px solid var(--line); border-radius: 12px;
+  padding: 14px; font: 500 16px var(--body); text-align: center;
+}
+.couple input::placeholder { color: var(--mute); opacity: .75; }
+.amp { font: italic 400 38px/1 var(--display); color: var(--rose); padding-bottom: 4px; }
+
 .bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
 .progress { height: 3px; background: var(--line); border-radius: 3px; overflow: hidden; }
-.progress i { display: block; height: 100%; background: var(--blush); width: 0; transition: width .4s ease; }
+.progress i { display: block; height: 100%; background: var(--rose); width: 0; transition: width .4s ease; }
 
 /* card */
 .table { flex: 1; display: grid; place-items: center; perspective: 1400px; min-height: 380px; }
@@ -116,65 +136,64 @@ p { margin: 0; }
 @keyframes deal { from { transform: translateY(28px) rotate(-3deg); opacity: 0; } to { transform: none; opacity: 1; } }
 .face {
   position: absolute; inset: 0; border-radius: 22px; backface-visibility: hidden; -webkit-backface-visibility: hidden;
-  box-shadow: 0 28px 60px -20px rgba(0,0,0,.8);
+  box-shadow: 0 26px 50px -24px rgba(107,29,46,.55);
   display: flex; flex-direction: column;
 }
 .back {
   background:
-    radial-gradient(circle at 50% 50%, rgba(231,169,154,.16) 0 22%, transparent 23%),
-    repeating-linear-gradient(45deg, rgba(231,169,154,.13) 0 1.5px, transparent 1.5px 13px),
-    repeating-linear-gradient(-45deg, rgba(231,169,154,.13) 0 1.5px, transparent 1.5px 13px),
-    #6e1426;
-  border: 10px solid var(--ivory);
+    radial-gradient(circle at 50% 50%, rgba(255,240,236,.18) 0 22%, transparent 23%),
+    repeating-linear-gradient(45deg, rgba(255,240,236,.16) 0 1.5px, transparent 1.5px 13px),
+    repeating-linear-gradient(-45deg, rgba(255,240,236,.16) 0 1.5px, transparent 1.5px 13px),
+    var(--rose);
+  border: 10px solid var(--card);
   align-items: center; justify-content: center; gap: 10px; padding: 24px; text-align: center;
 }
-.back .mark { font-family: var(--display); font-style: italic; font-size: 68px; color: var(--ivory); line-height: 1; }
-.back .hint { color: var(--ivory); opacity: .85; font-size: 14px; }
+.back .mark { font-family: var(--display); font-style: italic; font-size: 68px; color: var(--card); line-height: 1; }
+.back .hint { color: var(--card); opacity: .9; font-size: 14px; }
 .front {
   transform: rotateY(180deg);
-  background: var(--ivory); color: var(--ink);
+  background: var(--card); color: var(--ink);
   padding: 22px 22px 20px; gap: 14px;
 }
 .front .top { display: flex; justify-content: space-between; align-items: baseline; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--card-mute); font-weight: 700; }
-.front .num { font-family: var(--display); font-style: italic; font-size: 32px; letter-spacing: 0; color: var(--crimson); text-transform: none; font-weight: 400; }
+.front .num { font-family: var(--display); font-style: italic; font-size: 32px; letter-spacing: 0; color: var(--rose); text-transform: none; font-weight: 400; }
 .front .q { font-family: var(--display); font-size: clamp(22px, 6.4vw, 27px); line-height: 1.22; flex: 1; display: flex; align-items: center; text-wrap: pretty; overflow-wrap: anywhere; min-height: 0; }
 .front .note { font-size: 13.5px; line-height: 1.4; color: var(--card-mute); font-style: italic; }
-.front .who { font-size: 14px; color: var(--card-mute); border-top: 1px solid rgba(43,20,24,.14); padding-top: 12px; }
+.front .who { font-size: 14px; color: var(--card-mute); border-top: 1px solid var(--line); padding-top: 12px; }
 .front .who b { color: var(--ink); }
 .front .timer-row { display: flex; align-items: center; gap: 10px; }
-.front .timer-row .btn { background: var(--ink); color: var(--ivory); }
 .front .clock { font-variant-numeric: tabular-nums; font-weight: 700; font-size: 18px; }
 
 .controls { display: grid; grid-template-columns: auto 1fr 1fr; gap: 10px; }
 .toast { text-align: center; color: var(--mute); font-size: 13px; min-height: 20px; }
 
-.level-num { font-family: var(--display); font-style: italic; font-size: 120px; line-height: .9; color: var(--blush); }
+.level-num { font-family: var(--display); font-style: italic; font-size: 120px; line-height: .9; color: var(--rose); }
 .center { text-align: center; align-items: center; }
 
 /* question menu */
-.menu-head { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 2; padding: 10px 18px; margin: -10px -18px; background: var(--wine-deep); box-shadow: 0 10px 20px -10px var(--wine-deep); }
+.menu-head { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 2; padding: 10px 18px; margin: -10px -18px; background: var(--bg); box-shadow: 0 10px 20px -12px var(--bg); }
 .grp { display: grid; gap: 10px; }
 .qlist { display: grid; gap: 8px; }
 .qrow {
-  appearance: none; border: 0; cursor: pointer; text-align: left; color: var(--ivory);
+  appearance: none; border: 0; cursor: pointer; text-align: left; color: var(--ink);
   display: grid; grid-template-columns: 30px 1fr auto; gap: 10px; align-items: start;
-  padding: 13px 14px; border-radius: 14px; background: rgba(247,236,230,.05); box-shadow: inset 0 0 0 1px var(--line);
+  padding: 13px 14px; border-radius: 14px; background: rgba(255,255,255,.5); box-shadow: inset 0 0 0 1px var(--line);
   font: 400 15px/1.4 var(--body);
 }
-.qrow .qn { font-family: var(--display); font-style: italic; font-size: 20px; line-height: 1.05; color: var(--blush); }
+.qrow .qn { font-family: var(--display); font-style: italic; font-size: 20px; line-height: 1.05; color: var(--rose); }
 .qrow .qt { min-width: 0; }
-.qrow.seen .qt { opacity: .55; }
-.qrow.cur { box-shadow: inset 0 0 0 1.5px var(--blush); background: rgba(231,169,154,.1); }
+.qrow.seen .qt { opacity: .5; }
+.qrow.cur { box-shadow: inset 0 0 0 1.5px var(--rose); background: rgba(255,255,255,.8); }
 .tag { font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--mute); padding-top: 3px; }
-.tag.pass { color: var(--blush); }
+.tag.pass { color: var(--rose); }
 
 /* eye contact */
-.ring { position: relative; width: min(260px, 70vw); aspect-ratio: 1; margin: 0 auto; color: var(--blush); }
+.ring { position: relative; width: min(260px, 70vw); aspect-ratio: 1; margin: 0 auto; color: var(--rose); }
 .ring svg { width: 100%; height: 100%; transform: rotate(-90deg); }
-.ring .t { position: absolute; inset: 0; display: grid; place-items: center; font-family: var(--display); font-size: 56px; font-variant-numeric: tabular-nums; color: var(--ivory); }
+.ring .t { position: absolute; inset: 0; display: grid; place-items: center; font-family: var(--display); font-size: 56px; font-variant-numeric: tabular-nums; color: var(--ink); }
 
 @media (prefers-reduced-motion: reduce) {
-  .card, .progress i { transition: none; }
+  .card, .progress i, summary::after { transition: none; }
   .card.enter { animation: none; }
 }
 </style>
@@ -265,6 +284,20 @@ const NOTES = [
   "Son düzlüktesiniz.",
   "Son soru. Dinlemek de cevap vermek kadar önemli."
 ];
+const FAQ = [
+  ["36 soru nedir?", "1997'de psikolog Arthur Aron ve ekibi, iki yabancının kısa sürede yakınlaşıp yakınlaşamayacağını görmek için 36 soru hazırladı. Sorular üç bölümde giderek daha kişisel hale geliyor."],
+  ["Gerçekten işe yarıyor mu?", "Araştırma, karşılıklı ve adım adım açılmanın yabancılar arasında yakınlık hissini artırdığını gösterdi. Bir aşk iksiri değil ama derin bir sohbete başlamanın en iyi yollarından biri."],
+  ["Sevgilimle de oynayabilir miyim?", "Elbette. Uzun süredir birlikte olan çiftler de bu sorularla birbirleri hakkında yeni şeyler öğreniyor."],
+  ["Ne kadar sürer?", "Genelde 45 dakika ile bir saat arası. Acele etmeyin, süre önemli değil."],
+  ["Sırayla gitmek zorunda mıyız?", "Hayır, menüden istediğiniz soruyu seçebilirsiniz. Yine de sırayla gitmek, soruların yavaş yavaş derinleşmesi için en iyisi."],
+  ["Cevaplarımız bir yere kaydediliyor mu?", "Hayır. Hiçbir şey bir sunucuya gönderilmiyor; ilerlemeniz sadece bu telefonda kalıyor."]
+];
+const ICONS = {
+  phone: '<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="10" y="4" width="12" height="20" rx="2.5"/><path d="M14.5 20.5h3M3 28h26"/></svg>',
+  talk: '<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7.5A2.5 2.5 0 0 1 6.5 5h11A2.5 2.5 0 0 1 20 7.5v6a2.5 2.5 0 0 1-2.5 2.5H11l-4 3.5V16h-.5A2.5 2.5 0 0 1 4 13.5z"/><path d="M23 11h2.5a2.5 2.5 0 0 1 2.5 2.5v6a2.5 2.5 0 0 1-2.5 2.5H25v3.5L21 22h-5.5a2.5 2.5 0 0 1-2.5-2.5V19"/></svg>',
+  pass: '<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 16a11 11 0 0 1 19-7.5M27 16a11 11 0 0 1-19 7.5"/><path d="M24.5 3.5v5h-5M7.5 28.5v-5h5"/></svg>',
+  eye: '<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 16s4.5-8.5 13-8.5S29 16 29 16s-4.5 8.5-13 8.5S3 16 3 16z"/><circle cx="16" cy="16" r="4"/></svg>'
+};
 const TIMED = { 10: 240 }; // soru sırası (0'dan başlar) -> saniye
 const EYE_SECONDS = 240;
 const KEY = "36soru.v3";
@@ -291,12 +324,12 @@ function drop(arr, q) { const i = arr.indexOf(q); if (i > -1) arr.splice(i, 1); 
 async function keepAwake() {
   try { if ("wakeLock" in navigator && !wakeLock) { wakeLock = await navigator.wakeLock.request("screen"); wakeLock.addEventListener("release", () => wakeLock = null); } } catch (e) {}
 }
-document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible" && S.screen !== "start") keepAwake(); });
+document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible" && !["start", "intro"].includes(S.screen)) keepAwake(); });
 
 function go(screen) { stopTimer(); S.screen = screen; save(); render(); }
 
 function render() {
-  const r = { start: Start, level: Level, play: Play, menu: Menu, eye: Eye, end: End }[S.screen];
+  const r = { start: Start, intro: Intro, level: Level, play: Play, menu: Menu, eye: Eye, end: End }[S.screen];
   app.innerHTML = r();
   flash = "";
   bind();
@@ -304,28 +337,49 @@ function render() {
 
 function Start() {
   const saved = load();
-  const resume = saved && saved.screen !== "start" && saved.screen !== "end";
+  const resume = saved && !["start", "intro", "end"].includes(saved.screen);
   return `<section class="screen">
-    <p class="eyebrow">İlk buluşma için kart oyunu</p>
-    <h1>36 <em>Soru</em></h1>
-    <p class="lede">Psikolog Arthur Aron'un 1997'de iki yabancıyı birbirine yakınlaştırmak için hazırladığı sorular. Bir masa, iki kişi, tek telefon.</p>
-    <ul class="rules">
-      <li><b>1</b><span>Telefonu masanın ortasına koyun. Kartı açmak için dokunun.</span></li>
-      <li><b>2</b><span>Sırayla okuyun. Okuyan önce cevaplar.</span></li>
-      <li><b>3</b><span>Sorular giderek samimileşiyor. Hazır değilseniz pas geçin, o kartlar en sonda geri gelir.</span></li>
-      <li><b>4</b><span>Sırayla gitmek zorunda değilsiniz. Menüden istediğiniz soruyu seçebilirsiniz.</span></li>
-      <li><b>5</b><span>Sonunda 4 dakika konuşmadan göz göze bakıyorsunuz.</span></li>
+    <div class="hero">
+      <p class="eyebrow">İlk buluşma için kart oyunu</p>
+      <h1>36 <em>Soru</em></h1>
+      <p class="lede">Psikolog Arthur Aron'un 1997'de iki yabancıyı birbirine yakınlaştırmak için hazırladığı sorular. Bir masa, iki kişi, tek telefon.</p>
+      <div class="fan" aria-hidden="true"><i></i><i></i><i></i></div>
+      <div class="stack">
+        ${resume ? `<button class="btn" data-a="resume">Kaldığımız yerden devam edelim (${(saved.seen || []).length}/36)</button>
+        <button class="btn ghost" data-a="intro">Baştan başlayalım</button>` : `<button class="btn" data-a="intro">Başlayalım</button>`}
+        <p class="meta">36 soru · 3 seviye · yaklaşık 1 saat</p>
+      </div>
+    </div>
+    <div class="faq">
+      <h2>Merak edilenler</h2>
+      ${FAQ.map(([q, a]) => `<details><summary>${q}</summary><p>${a}</p></details>`).join("")}
+    </div>
+    <p class="credit">Sorular: Aron, A. ve ark. (1997), “The Experimental Generation of Interpersonal Closeness”. Türkçe uyarlama.</p>
+  </section>`;
+}
+
+function Intro() {
+  return `<section class="screen">
+    <p class="eyebrow">Başlamadan önce</p>
+    <h2>Nasıl <em>oynanır?</em></h2>
+    <ul class="steps">
+      <li>${ICONS.phone}<span>Telefonu masanın ortasına koyun. Kartı açmak için dokunun.</span></li>
+      <li>${ICONS.talk}<span>Biriniz soruyu okusun, ikiniz de cevaplayın. Sonraki soruda sıra değişir.</span></li>
+      <li>${ICONS.pass}<span>Hazır değilseniz pas geçin. O soru en sonda geri gelir.</span></li>
+      <li>${ICONS.eye}<span>Sonunda 4 dakika konuşmadan birbirinizin gözlerine bakın.</span></li>
     </ul>
-    <div class="names">
-      <div class="field"><label for="n0">Sen</label><input id="n0" autocomplete="off" maxlength="18" placeholder="Adın (isteğe bağlı)" value="${esc(S.names[0])}"></div>
-      <div class="field"><label for="n1">O</label><input id="n1" autocomplete="off" maxlength="18" placeholder="Adı (isteğe bağlı)" value="${esc(S.names[1])}"></div>
-    </div>
     <div class="spacer"></div>
-    <div class="stack">
-      ${resume ? `<button class="btn" data-a="resume">Kaldığımız yerden devam edelim (${(saved.seen || []).length}/36)</button>
-      <button class="btn ghost" data-a="start">Baştan başlayalım</button>` : `<button class="btn" data-a="start">Başlayalım</button>`}
+    <p class="eyebrow">Bu akşamın iki kişisi</p>
+    <div class="couple">
+      <input id="n0" autocomplete="off" maxlength="16" placeholder="Senin adın" aria-label="Senin adın" value="${esc(S.names[0])}">
+      <span class="amp" aria-hidden="true">&amp;</span>
+      <input id="n1" autocomplete="off" maxlength="16" placeholder="Onun adı" aria-label="Onun adı" value="${esc(S.names[1])}">
     </div>
-    <p class="credit">Sorular: Aron, A. ve ark. (1997), “The Experimental Generation of Interpersonal Closeness”. Türkçe uyarlama. Hiçbir veri toplanmıyor; ilerlemeniz sadece bu telefonda saklanıyor.</p>
+    <p class="meta">İsterseniz boş bırakabilirsiniz.</p>
+    <div class="stack">
+      <button class="btn" data-a="ready">Hazırız</button>
+      <button class="link" data-a="home">Geri</button>
+    </div>
   </section>`;
 }
 
@@ -402,7 +456,7 @@ function Eye() {
     <p class="lede">Telefonu bırakın ve birbirinizin gözlerine bakın. İlk başta garip gelebilir, gülmek serbest.</p>
     <div class="ring">
       <svg viewBox="0 0 100 100" aria-hidden="true">
-        <circle cx="50" cy="50" r="46" fill="none" stroke="rgba(247,236,230,.14)" stroke-width="3"></circle>
+        <circle cx="50" cy="50" r="46" fill="none" stroke="rgba(74,22,34,.14)" stroke-width="3"></circle>
         <circle id="arc" cx="50" cy="50" r="46" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
           stroke-dasharray="${C}" stroke-dashoffset="${C * (1 - left / EYE_SECONDS)}"></circle>
       </svg>
@@ -454,13 +508,14 @@ function step() {
 }
 
 function act(a, el) {
-  if (a === "start") {
+  if (a === "intro") { stopTimer(); S.screen = "intro"; render(); window.scrollTo(0, 0); }
+  else if (a === "ready") {
     const n = [document.getElementById("n0")?.value || "", document.getElementById("n1")?.value || ""];
     S = fresh(); S.names = n;
     keepAwake(); go("level");
   } else if (a === "resume") {
     S = { ...fresh(), ...load(), timer: null }; keepAwake(); render();
-  } else if (a === "home") { stopTimer(); S.screen = "start"; render(); }
+  } else if (a === "home") { stopTimer(); S.screen = "start"; render(); window.scrollTo(0, 0); }
   else if (a === "begin") { S.pos = 0; S.flipped = false; go("play"); }
   else if (a === "turn") { S.turned = !S.turned; save(); render(); }
   else if (a === "flip") {
