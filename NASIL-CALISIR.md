@@ -90,5 +90,5 @@ Bu dosya Claude'un yayın ortamı için yazıldı; o ortam başına standart HTM
 ## Yazı tipleri ve ziyaretçi sayacı
 
 - Yazı tipleri `fonts/` klasöründe duruyor ve sayfanın başındaki `@font-face` satırlarıyla yükleniyor. Google'a bağlanılmadığı için ziyaretçilerin IP adresi Google'a gitmiyor.
-- Ziyaretçi sayacı GoatCounter. Script'in başındaki `GOATCOUNTER` değerine hesap kodunu yazınca çalışmaya başlar (boşsa hiç yüklenmez). Sayfa açılışları otomatik sayılır; ayrıca üç olay gönderilir: `oyun-basladi`, `sorular-bitti`, `goz-temasi-bitti`. Bunlar `track()` fonksiyonuyla yapılıyor.
+- Ziyaretçi sayacı GoatCounter. Script'in başındaki `GOATCOUNTER` değerine hesap kodunu yazınca çalışmaya başlar (boşsa hiç yüklenmez). Sayfa açılışları otomatik sayılır; ayrıca dört olay gönderilir: `oyun-basladi`, `sorular-bitti`, `goz-temasi-bitti`, `paylas`. Bunlar `track()` fonksiyonuyla yapılıyor.
 - Sayaç çerez kullanmadığı için onay kutusu gerekmiyor. Ana sayfanın altındaki "Gizlilik" notu bunu anlatıyor; sayaç ya da veri toplama şekli değişirse o metni de güncelle.

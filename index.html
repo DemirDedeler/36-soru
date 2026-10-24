@@ -429,6 +429,7 @@ function Level() {
     <div class="spacer"></div>
     <div class="stack">
       <button class="btn" data-a="begin">${last ? "Kartları göster" : "Başlayalım"}</button>
+      ${last ? `<button class="link" data-a="skipall">Hepsini geç, son adıma geçelim</button>` : ""}
       <button class="link" data-a="menu">Tüm soruları gör</button>
       <button class="link" data-a="home">Ana sayfa</button>
     </div>
@@ -465,7 +466,7 @@ function Play() {
       <button class="btn ghost" data-a="pass" ${!S.flipped ? "disabled" : ""}>Pas</button>
       <button class="btn" data-a="next" ${!S.flipped ? "disabled" : ""}>Sonraki</button>
     </div>
-    <p class="toast" id="toast">${flash || (S.flipped ? "" : S.seen.length === 0 ? "İpucu: Tüm sorular sol üstteki ☰ Sorular menüsünde." : "Kartı açınca butonlar aktif olur")}</p>
+    <p class="toast" id="toast">${flash || (S.level === 3 ? `<button class="link" data-a="skipall">Kalan pasları geç</button>` : S.flipped ? "" : S.seen.length === 0 ? "İpucu: Tüm sorular sol üstteki ☰ Sorular menüsünde." : "Kartı açınca butonlar aktif olur")}</p>
   </section>`;
 }
 
@@ -512,9 +513,10 @@ function End() {
     <p class="lede">${esc(name(0))} ve ${esc(name(1))}, oyunu bitirdiniz. Aron'un deneyindeki çiftlerden biri altı ay sonra evlenmiş. Baskı yapmıyoruz, sadece söylüyoruz.</p>
     <div class="spacer"></div>
     <div class="stack">
-      <button class="btn" data-a="restart">Yeniden oyna</button>
+      <button class="btn" data-a="share">Linki paylaş</button>
+      <button class="btn ghost" data-a="restart">Yeniden oyna</button>
     </div>
-    <p class="credit">Beğendiyseniz bu sayfanın linkini arkadaşlarınızla paylaşabilirsiniz.</p>
+    <p class="credit">Beğendiyseniz arkadaşlarınıza da gönderin.</p>
   </section>`;
 }
 
@@ -530,6 +532,22 @@ function startTimer(seconds, onTick, onDone) {
 }
 function stopTimer() { if (tick) clearInterval(tick); tick = null; }
 function pauseTimer() { stopTimer(); if (S.timer) S.timer = { left: S.timer.left }; }
+// Telefonun paylaş menüsünü açar; desteklemeyen tarayıcıda linki panoya kopyalar.
+async function share(btn) {
+  const url = document.querySelector('meta[property="og:url"]')?.content || location.href;
+  const data = { title: "36 Soru", text: "İlk buluşmada tek telefonla oynanan 36 soruluk kart oyunu.", url };
+  track("paylas", "Link paylaşıldı");
+  if (navigator.share) {
+    try { await navigator.share(data); return; } catch (e) { if (e.name === "AbortError") return; }
+  }
+  try { await navigator.clipboard.writeText(url); }
+  catch (e) {
+    const ta = document.createElement("textarea"); ta.value = url; document.body.appendChild(ta); ta.select();
+    try { document.execCommand("copy"); } catch (e2) {} ta.remove();
+  }
+  btn.textContent = "Link kopyalandı";
+  setTimeout(() => { if (btn.isConnected) btn.textContent = "Linki paylaş"; }, 2000);
+}
 function buzz() { try { navigator.vibrate && navigator.vibrate([200, 100, 200]); } catch (e) {} }
 
 // Bir sonraki karta, seviyeye ya da pas geçilenler turuna geçer.
@@ -563,7 +581,7 @@ function act(a, el) {
     const card = document.getElementById("card");
     card.classList.remove("enter"); card.classList.add("flipped"); card.setAttribute("aria-label", "Soru kartı");
     app.querySelectorAll('[data-a="pass"], [data-a="next"]').forEach(b => b.disabled = false);
-    const t = document.getElementById("toast"); if (t) t.textContent = "";
+    const t = document.getElementById("toast"); if (t && S.level !== 3) t.textContent = "";
     const bar = app.querySelector(".progress i"); if (bar) bar.style.width = (S.seen.length / 36 * 100) + "%";
   } else if (a === "next") { drop(S.passed, cur()); step(); }
   else if (a === "pass") {
@@ -600,6 +618,9 @@ function act(a, el) {
       render();
     }
   } else if (a === "finish") { S.timer = null; go("end"); }
+  // Pas turunda kalan kartları atlayıp doğrudan göz teması ekranına geçer.
+  else if (a === "skipall") { S.level = 3; S.pos = deck(3).length - 1; step(); }
+  else if (a === "share") { share(el); }
   else if (a === "restart") { const n = S.names; clear(); S = fresh(); S.names = n; render(); }
 }
 
