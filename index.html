@@ -225,7 +225,7 @@ details.privacy { border: 0; }
 <script>
 const LEVELS = [
   { name: "Isınma", blurb: "Tanışma faslı. Rahat sorular, rahat cevaplar." },
-  { name: "Derinleşme", blurb: "Biraz daha kişisel. Acele etmeyin." },
+  { name: "Derinleşme", blurb: "Biraz daha kişisel :)" },
   { name: "Yakınlık", blurb: "En samimi kısım. Buraya kadar geldiyseniz akşam güzel geçiyor demektir." },
   { name: "Pas geçtikleriniz", blurb: "Şimdi pas geçtiğiniz kartları gösteriyoruz. Hâlâ hazır değilseniz yine geçebilirsiniz." }
 ];
@@ -273,18 +273,18 @@ const NOTES = [
   "Restoranı ararken bile mi?",
   "Kahvaltıdan başla.",
   "Duşta söylenenler de sayılır.",
-  "Zor seçim. Acele etme.",
+  "Zor bir seçim.",
   "İstersen ciddi cevapla, istersen gülüp geç.",
   "Bu akşam fark ettiklerin de sayılır.",
   "Küçük şeyler de olur.",
-  "Kimseyi suçlamak için değil, merak için.",
-  "Sayacı başlat, kısa kesmek yok.",
+  "Kimseyi suçlamak için değil, meraktan.",
+  "Dört dakikan var, sayaç aşağıda.",
   "Uçmak da olur, mükemmel makarna yapmak da.",
   "Cevabını gerçekten bilmek istediğin bir şey olsun.",
   "Bahane kabul, yargılamak yok.",
   "Bu akşam alçakgönüllü olmak zorunda değilsin.",
   "Cevabı dikkatle dinle, ileride işine yarayabilir.",
-  "Acele etme, güzel bir anı seç.",
+  "Büyük ya da küçük, fark etmez.",
   "Anlatmak istemezsen pas geçebilirsin.",
   "Cevap kısa olabilir, düşünmek uzun sürebilir.",
   "16. soruya benziyor ama aynı değil.",
@@ -309,7 +309,7 @@ const FAQ = [
   ["36 soru nedir?", "1997'de psikolog Arthur Aron ve ekibi, iki yabancının kısa sürede yakınlaşıp yakınlaşamayacağını görmek için 36 soru hazırladı. Sorular üç bölümde giderek daha kişisel hale geliyor."],
   ["Gerçekten işe yarıyor mu?", "Araştırma, karşılıklı ve adım adım açılmanın yabancılar arasında yakınlık hissini artırdığını gösterdi. Bir aşk iksiri değil ama derin bir sohbete başlamanın en iyi yollarından biri."],
   ["Sevgilimle de oynayabilir miyim?", "Elbette. Uzun süredir birlikte olan çiftler de bu sorularla birbirleri hakkında yeni şeyler öğreniyor."],
-  ["Ne kadar sürer?", "Genelde 45 dakika ile bir saat arası. Acele etmeyin, süre önemli değil."],
+  ["Ne kadar sürer?", "Genelde 45 dakika ile bir saat arası. Süre önemli değil, kendi hızınızda gidin."],
   ["Sırayla gitmek zorunda mıyız?", "Hayır, menüden istediğiniz soruyu seçebilirsiniz. Yine de sırayla gitmek, soruların yavaş yavaş derinleşmesi için en iyisi."],
   ["Cevaplarımız bir yere kaydediliyor mu?", "Hayır. Cevaplarınızı zaten sesli veriyorsunuz; sitede yazılan bir şey yok. İlerlemeniz sadece bu telefonda kalıyor."]
 ];
@@ -455,7 +455,7 @@ function Play() {
           <div class="top"><span>${S.level === 3 ? "Pas geçilen" : "Seviye " + (S.level + 1)}</span><span class="num">${qi + 1}</span></div>
           <div class="q ${Q[qi].length > 110 ? "long" : ""}">${esc(Q[qi])}</div>
           <div class="note">${esc(NOTES[qi])}</div>
-          ${t ? `<div class="timer-row"><button class="btn small" data-a="timer">${S.timer ? "Durdur" : "Sayacı başlat"}</button><span class="clock" id="clock">${fmt(S.timer ? S.timer.left : t)}</span></div>` : ""}
+          ${t ? `<div class="timer-row"><button class="btn small" data-a="timer">${tick ? "Durdur" : S.timer ? "Devam et" : "Sayacı başlat"}</button><span class="clock" id="clock">${fmt(S.timer ? S.timer.left : t)}</span></div>` : ""}
           <div class="who">Önce cevaplayan: <b>${esc(name(reader))}</b></div>
         </div>
       </div>
@@ -498,7 +498,7 @@ function Eye() {
     </div>
     <div class="spacer"></div>
     <div class="stack">
-      <button class="btn" data-a="eye">${S.timer ? "Durdur" : left < EYE_SECONDS ? "Devam et" : "Başlat"}</button>
+      <button class="btn" data-a="eye">${tick ? "Durdur" : left < EYE_SECONDS ? "Devam et" : "Başlat"}</button>
       <button class="link" data-a="finish">Geç ve bitir</button>
     </div>
   </section>`;
