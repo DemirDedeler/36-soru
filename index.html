@@ -95,6 +95,7 @@ p { margin: 0; }
 .btn:focus-visible, .chip:focus-visible, .link:focus-visible, .card:focus-visible, .qrow:focus-visible, .couple input:focus-visible, summary:focus-visible { outline: 2px solid var(--rose); outline-offset: 3px; }
 .spacer { flex: 1; }
 .stack { display: grid; gap: 10px; width: 100%; }
+.links { display: flex; justify-content: center; gap: 28px; flex-wrap: wrap; }
 .credit { color: var(--mute); font-size: 12px; line-height: 1.5; }
 
 /* start */
@@ -332,7 +333,7 @@ let wakeLock = null;
 let flash = "";
 
 function fresh() {
-  return { screen: "start", names: ["", ""], level: 0, pos: 0, flipped: false, turned: false, seen: [], passed: [], passRound: [], reads: 0, prev: "play", timer: null };
+  return { screen: "start", names: ["", ""], level: 0, pos: 0, flipped: false, turned: false, seen: [], passed: [], passRound: [], reads: 0, prev: "play", timer: null, eyeReady: false };
 }
 function deck(l) { return l === 3 ? S.passRound : Array.from({ length: 12 }, (_, i) => l * 12 + i); }
 function cur() { return deck(S.level)[S.pos]; }
@@ -468,7 +469,7 @@ function Level() {
     <div class="spacer"></div>
     <div class="stack">
       <button class="btn" data-a="begin">${last ? "Kartları göster" : "Başlayalım"}</button>
-      ${last ? `<button class="link" data-a="skipall">Hepsini geç, son adıma geçelim</button>` : ""}
+      ${last ? `<button class="link" data-a="skipall">Hepsini geç, son adıma geçelim</button>` : S.eyeReady ? `<button class="link" data-a="toeye">4 dakikalık bakışmaya dön</button>` : ""}
       <button class="link" data-a="menu">Tüm soruları gör</button>
       <button class="link" data-a="home">Ana sayfa</button>
     </div>
@@ -505,7 +506,7 @@ function Play() {
       <button class="btn ghost" data-a="pass" ${!S.flipped ? "disabled" : ""}>Pas</button>
       <button class="btn" data-a="next" ${!S.flipped ? "disabled" : ""}>Sonraki</button>
     </div>
-    <p class="toast" id="toast">${flash || (S.level === 3 ? `<button class="link" data-a="skipall">Kalan pasları geç</button>` : S.flipped ? "" : S.seen.length === 0 ? "İpucu: Tüm sorular sol üstteki ☰ Sorular menüsünde." : "Kartı açınca butonlar aktif olur")}</p>
+    <p class="toast" id="toast">${flash || (S.level === 3 ? `<button class="link" data-a="skipall">Kalan pasları geç</button>` : S.eyeReady ? `<button class="link" data-a="toeye">4 dakikalık bakışmaya dön</button>` : S.flipped ? "" : S.seen.length === 0 ? "İpucu: Tüm sorular sol üstteki ☰ Sorular menüsünde." : "Kartı açınca butonlar aktif olur")}</p>
   </section>`;
 }
 
@@ -514,6 +515,7 @@ function Menu() {
   return `<section class="screen">
     <div class="bar menu-head"><div class="title"><button class="icon-btn" data-a="home" aria-label="Ana sayfa"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 10.5 12 3.5l8.5 7"/><path d="M5.5 9v10.5h4.5v-6h4v6h4.5V9"/></svg></button><h2 style="font-size:30px">Tüm sorular</h2></div><button class="btn ghost small" data-a="close">Kapat</button></div>
     <p class="lede" style="font-size:15px">Hangisini istiyorsanız ona dokunun.</p>
+    ${S.eyeReady ? `<button class="btn" data-a="toeye">4 dakikalık bakışmaya dön</button>` : ""}
     ${[0, 1, 2].map(l => `<div class="grp"><p class="eyebrow">Seviye ${l + 1} · ${LEVELS[l].name}</p><div class="qlist">${deck(l).map(q => {
       const tag = S.passed.includes(q) ? `<span class="tag pass">Pas</span>` : S.seen.includes(q) ? `<span class="tag">Açıldı</span>` : "<span></span>";
       return `<button class="qrow ${S.seen.includes(q) && !S.passed.includes(q) ? "seen" : ""} ${q === curQ ? "cur" : ""}" data-a="jump" data-q="${q}"><span class="qn">${q + 1}</span><span class="qt">${esc(Q[q])}</span>${tag}</button>`;
@@ -539,7 +541,7 @@ function Eye() {
     <div class="spacer"></div>
     <div class="stack">
       <button class="btn" data-a="eye">${tick ? "Durdur" : left < EYE_SECONDS ? "Devam et" : "Başlat"}</button>
-      <button class="link" data-a="finish">Geç ve bitir</button>
+      <div class="links"><button class="link" data-a="menu">Sorulara geri dön</button><button class="link" data-a="finish">Geç ve bitir</button></div>
     </div>
   </section>`;
 }
@@ -595,7 +597,7 @@ function step() {
   if (S.pos < deck(S.level).length - 1) { S.pos++; go("play"); }
   else if (S.level < 2) { S.level++; S.pos = 0; go("level"); }
   else if (S.level === 2 && S.passed.length) { S.passRound = [...S.passed]; S.level = 3; S.pos = 0; go("level"); }
-  else { track("sorular-bitti", "36 soru bitti"); go("eye"); }
+  else { if (!S.eyeReady) track("sorular-bitti", "36 soru bitti"); S.eyeReady = true; go("eye"); }
 }
 
 function act(a, el) {
@@ -620,7 +622,7 @@ function act(a, el) {
     const card = document.getElementById("card");
     card.classList.remove("enter"); card.classList.add("flipped"); card.setAttribute("aria-label", "Soru kartı");
     app.querySelectorAll('[data-a="pass"], [data-a="next"]').forEach(b => b.disabled = false);
-    const t = document.getElementById("toast"); if (t && S.level !== 3) t.textContent = "";
+    const t = document.getElementById("toast"); if (t && S.level !== 3 && !S.eyeReady) t.textContent = "";
     const bar = app.querySelector(".progress i"); if (bar) bar.style.width = (S.seen.length / 36 * 100) + "%";
   } else if (a === "next") { drop(S.passed, cur()); step(); }
   else if (a === "pass") {
@@ -660,6 +662,8 @@ function act(a, el) {
   // Pas turunda kalan kartları atlayıp doğrudan göz teması ekranına geçer.
   else if (a === "skipall") { S.level = 3; S.pos = deck(3).length - 1; step(); }
   else if (a === "share") { share(el); }
+  // Sorulara geri dönenler, göz temasına her ekrandan tek dokunuşla geri gelebilir.
+  else if (a === "toeye") { S.flipped = false; S.turned = false; S.timer = null; go("eye"); window.scrollTo(0, 0); }
   else if (a === "restart") { const n = S.names; clear(); S = fresh(); S.names = n; render(); }
 }
 
