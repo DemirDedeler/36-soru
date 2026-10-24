@@ -137,6 +137,7 @@ details.privacy { border: 0; }
 .amp { font: italic 400 38px/1 var(--display); color: var(--rose); padding-bottom: 4px; }
 
 .bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.bar.tools { margin-bottom: -6px; }
 .progress { height: 3px; background: var(--line); border-radius: 3px; overflow: hidden; }
 .progress i { display: block; height: 100%; background: var(--rose); width: 0; transition: width .4s ease; }
 
@@ -312,8 +313,7 @@ const FAQ = [
   ["Gerçekten işe yarıyor mu?", "Araştırma, karşılıklı ve adım adım açılmanın yabancılar arasında yakınlık hissini artırdığını gösterdi. Bir aşk iksiri değil ama derin bir sohbete başlamanın en iyi yollarından biri."],
   ["Sevgilimle de oynayabilir miyim?", "Elbette. Uzun süredir birlikte olan çiftler de bu sorularla birbirleri hakkında yeni şeyler öğreniyor."],
   ["Ne kadar sürer?", "Genelde 45 dakika ile bir saat arası. Süre önemli değil, kendi hızınızda gidin."],
-  ["Sırayla gitmek zorunda mıyız?", "Hayır, menüden istediğiniz soruyu seçebilirsiniz. Yine de sırayla gitmek, soruların yavaş yavaş derinleşmesi için en iyisi."],
-  ["Cevaplarımız bir yere kaydediliyor mu?", "Hayır. Cevaplarınızı zaten sesli veriyorsunuz; sitede yazılan bir şey yok. İlerlemeniz sadece bu telefonda kalıyor."]
+  ["Sırayla gitmek zorunda mıyız?", "Hayır, menüden istediğiniz soruyu seçebilirsiniz. Yine de sırayla gitmek, soruların yavaş yavaş derinleşmesi için en iyisi."]
 ];
 const ICONS = {
   phone: '<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="10" y="4" width="12" height="20" rx="2.5"/><path d="M14.5 20.5h3M3 28h26"/></svg>',
@@ -485,10 +485,6 @@ function Play() {
   const pct = (S.seen.length / 36) * 100;
   const where = S.level === 3 ? `Pas ${S.pos + 1}/${d.length}` : `${S.pos + 1}/12`;
   return `<section class="screen">
-    <div class="bar">
-      <button class="chip" data-a="menu" aria-label="Tüm sorular">☰ Sorular · ${where}</button>
-      <button class="chip" data-a="turn" aria-pressed="${S.turned ? "true" : "false"}" aria-label="Kartı karşıdaki kişiye çevir">↻ Karşıya çevir</button>
-    </div>
     <div class="progress"><i style="width:${pct}%"></i></div>
     <div class="table">
       <div class="card ${S.flipped ? "flipped" : "enter"} ${S.turned ? "turned" : ""}" id="card" role="button" tabindex="0" aria-label="${S.flipped ? "Soru kartı" : "Kartı aç"}">
@@ -502,12 +498,16 @@ function Play() {
         </div>
       </div>
     </div>
+    <div class="bar tools">
+      <button class="chip" data-a="menu" aria-label="Tüm sorular">☰ Sorular · ${where}</button>
+      <button class="chip" data-a="turn" aria-pressed="${S.turned ? "true" : "false"}" aria-label="Kartı karşıdaki kişiye çevir">↻ Karşıya çevir</button>
+    </div>
     <div class="controls">
       <button class="btn ghost small" data-a="back" ${S.level === 0 && S.pos === 0 ? "disabled" : ""} aria-label="Önceki kart">←</button>
       <button class="btn ghost" data-a="pass" ${!S.flipped ? "disabled" : ""}>Pas</button>
       <button class="btn" data-a="next" ${!S.flipped ? "disabled" : ""}>Sonraki</button>
     </div>
-    <p class="toast" id="toast">${flash || (S.level === 3 ? `<button class="link" data-a="skipall">Kalan pasları geç</button>` : S.eyeReady ? `<button class="link" data-a="toeye">4 dakikalık bakışmaya dön</button>` : S.flipped ? "" : S.seen.length === 0 ? "İpucu: Tüm sorular sol üstteki ☰ Sorular menüsünde." : "Kartı açınca butonlar aktif olur")}</p>
+    <p class="toast" id="toast">${flash || (S.level === 3 ? `<button class="link" data-a="skipall">Kalan pasları geç</button>` : S.eyeReady ? `<button class="link" data-a="toeye">4 dakikalık bakışmaya dön</button>` : S.flipped ? "" : S.seen.length === 0 ? "İpucu: İstediğiniz soruya ☰ Sorular'dan geçebilirsiniz." : "Kartı açınca butonlar aktif olur")}</p>
   </section>`;
 }
 
