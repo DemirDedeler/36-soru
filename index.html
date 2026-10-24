@@ -4,12 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>36 Soru · İlk buluşma kart oyunu</title>
-<meta name="description" content="İlk buluşmada tek telefonla oynanan kart oyunu. Psikolog Arthur Aron'un yakınlaştıran 36 sorusu, Türkçe.">
-<meta name="theme-color" content="#0c1915">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect x='10' y='4' width='44' height='56' rx='8' fill='%23f3ecdf'/%3E%3Ctext x='32' y='42' font-family='Georgia,serif' font-size='24' text-anchor='middle' fill='%23c46a5a'%3E36%3C/text%3E%3C/svg%3E">
+<meta name="description" content="İlk buluşmada tek telefonla oynanan kart oyunu. Psikolog Arthur Aron'un insanları birbirine yakınlaştıran 36 sorusu, Türkçe.">
+<meta name="theme-color" content="#14060a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect x='10' y='4' width='44' height='56' rx='8' fill='%23f7ece6'/%3E%3Ctext x='32' y='42' font-family='Georgia,serif' font-size='24' text-anchor='middle' fill='%23a3253a'%3E36%3C/text%3E%3C/svg%3E">
 <meta property="og:type" content="website">
 <meta property="og:title" content="36 Soru">
-<meta property="og:description" content="İlk buluşmada tek telefonla oynanan kart oyunu. Yakınlaştıran 36 soru, Türkçe.">
+<meta property="og:description" content="İlk buluşmada tek telefonla oynanan kart oyunu. İnsanları birbirine yakınlaştıran 36 soru.">
 <meta property="og:url" content="https://demirdedeler.github.io/36-soru/">
 <meta property="og:image" content="https://demirdedeler.github.io/36-soru/og.png">
 <meta property="og:image:width" content="1200">
@@ -19,24 +19,28 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Manrope:wght@400;500;700&display=swap">
 <style>
-/* Layout: one phone lying on a restaurant table. A single ivory card sits on dark felt; everything else is quiet. Dark by choice so the screen never glares across the table. */
+/* Layout: one phone on a dim restaurant table. A blush-ivory card on deep wine velvet; everything around it stays quiet. Dark by choice so the screen never glares across the table. */
 :root {
-  --felt: #142621;
-  --felt-deep: #0c1915;
-  --ivory: #f3ecdf;
-  --ink: #2a2320;
-  --brass: #d3a35c;
-  --rose: #c46a5a;
-  --mute: #9fb2a9;
-  --line: rgba(243,236,223,.14);
+  --wine: #3a1220;
+  --wine-deep: #14060a;
+  --ivory: #f7ece6;
+  --ink: #2b1418;
+  --blush: #e7a99a;
+  --crimson: #a3253a;
+  --mute: #c7a3a6;
+  --card-mute: #84605f;
+  --line: rgba(247,236,230,.14);
   --display: "DM Serif Display", Georgia, "Times New Roman", serif;
   --body: "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
   color-scheme: dark;
 }
+*, *::before, *::after { box-sizing: border-box; }
 html, body { height: 100%; }
+html { padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); background: var(--wine-deep); }
+[hidden] { display: none !important; }
 body {
-  background: radial-gradient(120% 80% at 50% 30%, var(--felt) 0%, var(--felt-deep) 100%) fixed;
-  background-color: var(--felt-deep);
+  margin: 0;
+  background: radial-gradient(120% 80% at 50% 20%, var(--wine) 0%, var(--wine-deep) 100%) top / 100% 100vh no-repeat, var(--wine-deep);
   color: var(--ivory);
   font-family: var(--body);
   font-size: 16px;
@@ -52,55 +56,52 @@ body {
   display: flex;
   flex-direction: column;
   gap: 18px;
-  box-sizing: border-box;
 }
 .screen { display: flex; flex-direction: column; gap: 18px; flex: 1; }
 h1, h2 { font-family: var(--display); font-weight: 400; margin: 0; text-wrap: balance; line-height: 1.1; }
 h1 { font-size: clamp(56px, 18vw, 84px); letter-spacing: -.01em; }
-h1 em { color: var(--brass); font-style: italic; }
+h1 em, h2 em { color: var(--blush); font-style: italic; }
 h2 { font-size: 34px; }
 p { margin: 0; }
 .lede { color: var(--mute); font-size: 17px; max-width: 34ch; }
-.eyebrow { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--brass); font-weight: 700; }
+.eyebrow { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--blush); font-weight: 700; }
 
 .btn {
   appearance: none; border: 0; cursor: pointer;
   font: 700 16px/1 var(--body);
   padding: 17px 20px; border-radius: 14px;
-  background: var(--brass); color: var(--felt-deep);
+  background: var(--blush); color: var(--wine-deep);
   transition: transform .12s ease, opacity .2s;
 }
 .btn:active { transform: scale(.98); }
 .btn.ghost { background: transparent; color: var(--ivory); box-shadow: inset 0 0 0 1px var(--line); }
 .btn.small { padding: 12px 14px; font-size: 14px; border-radius: 12px; }
-.btn:focus-visible, .field input:focus-visible, .link:focus-visible, .card:focus-visible { outline: 2px solid var(--brass); outline-offset: 3px; }
 .btn[disabled] { opacity: .35; cursor: default; }
 .link { background: none; border: 0; color: var(--mute); font: 500 14px var(--body); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; padding: 6px 0; }
+.chip { appearance: none; border: 0; background: transparent; color: var(--mute); box-shadow: inset 0 0 0 1px var(--line); border-radius: 10px; padding: 8px 11px; font: 500 13px var(--body); cursor: pointer; }
+.chip[aria-pressed="true"] { color: var(--blush); box-shadow: inset 0 0 0 1px var(--blush); }
+.btn:focus-visible, .chip:focus-visible, .link:focus-visible, .card:focus-visible, .qrow:focus-visible, .field input:focus-visible { outline: 2px solid var(--blush); outline-offset: 3px; }
 
 .names { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 .field { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
 .field label { font-size: 12px; color: var(--mute); letter-spacing: .08em; text-transform: uppercase; }
 .field input {
-  width: 100%; box-sizing: border-box;
+  width: 100%;
   background: rgba(0,0,0,.25); color: var(--ivory);
   border: 1px solid var(--line); border-radius: 12px;
   padding: 13px 14px; font: 500 16px var(--body);
 }
+.field input::placeholder { color: var(--mute); opacity: .7; }
 .rules { display: grid; gap: 12px; padding: 0; margin: 0; list-style: none; }
-.rules li { display: grid; grid-template-columns: 26px 1fr; gap: 10px; color: var(--ivory); font-size: 15px; }
-.rules b { font-family: var(--display); font-weight: 400; color: var(--brass); font-size: 20px; line-height: 1.1; }
+.rules li { display: grid; grid-template-columns: 26px 1fr; gap: 10px; font-size: 15px; }
+.rules b { font-family: var(--display); font-weight: 400; color: var(--blush); font-size: 20px; line-height: 1.1; }
 .spacer { flex: 1; }
-.stack { display: grid; gap: 10px; }
+.stack { display: grid; gap: 10px; width: 100%; }
 .credit { color: var(--mute); font-size: 12px; line-height: 1.5; }
 
-/* top bar */
 .bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-.bar .count { font-variant-numeric: tabular-nums; color: var(--mute); font-size: 14px; }
 .progress { height: 3px; background: var(--line); border-radius: 3px; overflow: hidden; }
-.progress i { display: block; height: 100%; background: var(--brass); width: 0; transition: width .4s ease; }
-.pips { display: flex; gap: 6px; }
-.pips span { width: 22px; height: 4px; border-radius: 2px; background: var(--line); }
-.pips span.on { background: var(--brass); }
+.progress i { display: block; height: 100%; background: var(--blush); width: 0; transition: width .4s ease; }
 
 /* card */
 .table { flex: 1; display: grid; place-items: center; perspective: 1400px; min-height: 380px; }
@@ -110,32 +111,35 @@ p { margin: 0; }
   cursor: pointer; border-radius: 22px;
 }
 .card.flipped { transform: rotateY(180deg); }
+.card.flipped.turned { transform: rotateY(180deg) rotateZ(180deg); }
 .card.enter { animation: deal .45s cubic-bezier(.2,.8,.2,1); }
 @keyframes deal { from { transform: translateY(28px) rotate(-3deg); opacity: 0; } to { transform: none; opacity: 1; } }
 .face {
   position: absolute; inset: 0; border-radius: 22px; backface-visibility: hidden; -webkit-backface-visibility: hidden;
-  box-shadow: 0 24px 50px -18px rgba(0,0,0,.7), 0 2px 0 rgba(255,255,255,.04) inset;
-  box-sizing: border-box; display: flex; flex-direction: column;
+  box-shadow: 0 28px 60px -20px rgba(0,0,0,.8);
+  display: flex; flex-direction: column;
 }
 .back {
   background:
-    repeating-linear-gradient(45deg, rgba(211,163,92,.10) 0 2px, transparent 2px 14px),
-    repeating-linear-gradient(-45deg, rgba(211,163,92,.10) 0 2px, transparent 2px 14px),
-    #3a1f22;
+    radial-gradient(circle at 50% 50%, rgba(231,169,154,.16) 0 22%, transparent 23%),
+    repeating-linear-gradient(45deg, rgba(231,169,154,.13) 0 1.5px, transparent 1.5px 13px),
+    repeating-linear-gradient(-45deg, rgba(231,169,154,.13) 0 1.5px, transparent 1.5px 13px),
+    #6e1426;
   border: 10px solid var(--ivory);
   align-items: center; justify-content: center; gap: 10px; padding: 24px; text-align: center;
 }
-.back .mark { font-family: var(--display); font-size: 64px; color: var(--brass); line-height: 1; }
-.back .hint { color: var(--ivory); opacity: .8; font-size: 14px; }
+.back .mark { font-family: var(--display); font-style: italic; font-size: 68px; color: var(--ivory); line-height: 1; }
+.back .hint { color: var(--ivory); opacity: .85; font-size: 14px; }
 .front {
   transform: rotateY(180deg);
   background: var(--ivory); color: var(--ink);
   padding: 22px 22px 20px; gap: 14px;
 }
-.front .top { display: flex; justify-content: space-between; align-items: baseline; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: #7a6a5c; font-weight: 700; }
-.front .num { font-family: var(--display); font-size: 30px; letter-spacing: 0; color: var(--rose); text-transform: none; font-weight: 400; }
+.front .top { display: flex; justify-content: space-between; align-items: baseline; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--card-mute); font-weight: 700; }
+.front .num { font-family: var(--display); font-style: italic; font-size: 32px; letter-spacing: 0; color: var(--crimson); text-transform: none; font-weight: 400; }
 .front .q { font-family: var(--display); font-size: clamp(22px, 6.4vw, 27px); line-height: 1.22; flex: 1; display: flex; align-items: center; text-wrap: pretty; overflow-wrap: anywhere; min-height: 0; }
-.front .who { font-size: 14px; color: #5e5147; border-top: 1px solid rgba(42,35,32,.14); padding-top: 12px; }
+.front .note { font-size: 13.5px; line-height: 1.4; color: var(--card-mute); font-style: italic; }
+.front .who { font-size: 14px; color: var(--card-mute); border-top: 1px solid rgba(43,20,24,.14); padding-top: 12px; }
 .front .who b { color: var(--ink); }
 .front .timer-row { display: flex; align-items: center; gap: 10px; }
 .front .timer-row .btn { background: var(--ink); color: var(--ivory); }
@@ -144,153 +148,145 @@ p { margin: 0; }
 .controls { display: grid; grid-template-columns: auto 1fr 1fr; gap: 10px; }
 .toast { text-align: center; color: var(--mute); font-size: 13px; min-height: 20px; }
 
-/* level intro */
-.level-num { font-family: var(--display); font-size: 120px; line-height: .9; color: var(--brass); }
-
-/* eye contact */
-.ring { position: relative; width: min(260px, 70vw); aspect-ratio: 1; margin: 0 auto; }
-.ring svg { width: 100%; height: 100%; transform: rotate(-90deg); }
-.ring .t { position: absolute; inset: 0; display: grid; place-items: center; font-family: var(--display); font-size: 56px; font-variant-numeric: tabular-nums; }
+.level-num { font-family: var(--display); font-style: italic; font-size: 120px; line-height: .9; color: var(--blush); }
 .center { text-align: center; align-items: center; }
 
-/* confirm sheet */
-.sheet { border: 1px solid var(--line); border-radius: 16px; padding: 16px; display: grid; gap: 12px; background: rgba(0,0,0,.25); }
+/* question menu */
+.menu-head { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 2; padding: 10px 18px; margin: -10px -18px; background: var(--wine-deep); box-shadow: 0 10px 20px -10px var(--wine-deep); }
+.grp { display: grid; gap: 10px; }
+.qlist { display: grid; gap: 8px; }
+.qrow {
+  appearance: none; border: 0; cursor: pointer; text-align: left; color: var(--ivory);
+  display: grid; grid-template-columns: 30px 1fr auto; gap: 10px; align-items: start;
+  padding: 13px 14px; border-radius: 14px; background: rgba(247,236,230,.05); box-shadow: inset 0 0 0 1px var(--line);
+  font: 400 15px/1.4 var(--body);
+}
+.qrow .qn { font-family: var(--display); font-style: italic; font-size: 20px; line-height: 1.05; color: var(--blush); }
+.qrow .qt { min-width: 0; }
+.qrow.seen .qt { opacity: .55; }
+.qrow.cur { box-shadow: inset 0 0 0 1.5px var(--blush); background: rgba(231,169,154,.1); }
+.tag { font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--mute); padding-top: 3px; }
+.tag.pass { color: var(--blush); }
+
+/* eye contact */
+.ring { position: relative; width: min(260px, 70vw); aspect-ratio: 1; margin: 0 auto; color: var(--blush); }
+.ring svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+.ring .t { position: absolute; inset: 0; display: grid; place-items: center; font-family: var(--display); font-size: 56px; font-variant-numeric: tabular-nums; color: var(--ivory); }
 
 @media (prefers-reduced-motion: reduce) {
   .card, .progress i { transition: none; }
   .card.enter { animation: none; }
 }
 </style>
-<style>
-*, *::before, *::after { box-sizing: border-box; }
-html { padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
-body { margin: 0; }
-[hidden] { display: none !important; }
-.bar .right { display: flex; align-items: center; gap: 10px; }
-.turn { appearance: none; border: 0; background: transparent; color: var(--mute); box-shadow: inset 0 0 0 1px var(--line); border-radius: 10px; padding: 7px 10px; font: 500 13px var(--body); cursor: pointer; }
-.turn[aria-pressed="true"] { color: var(--brass); box-shadow: inset 0 0 0 1px var(--brass); }
-.turn:focus-visible { outline: 2px solid var(--brass); outline-offset: 2px; }
-.front .note { font-size: 13.5px; line-height: 1.4; color: #7a6a5c; font-style: italic; }
-.grp { display: grid; gap: 10px; }
-.grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; }
-.tile { appearance: none; border: 0; cursor: pointer; aspect-ratio: 1; border-radius: 10px; background: var(--ivory); color: var(--ink); font: 400 20px var(--display); }
-.tile.seen { opacity: .4; }
-.tile.cur { box-shadow: 0 0 0 2px var(--felt-deep), 0 0 0 4px var(--brass); opacity: 1; }
-.tile:focus-visible { outline: 2px solid var(--brass); outline-offset: 2px; }
-.card.flipped.turned { transform: rotateY(180deg) rotateZ(180deg); }
-</style>
 </head>
 <body>
-
-
 <div class="app" id="app"></div>
 
 <script>
 const LEVELS = [
-  { name: "Isınma", blurb: "Kolay sorular. Garson siparişi almaya gelene kadar bitirebilirsiniz." },
-  { name: "Derinleşme", blurb: "İşler biraz ciddileşiyor. Bir yudum su için, acele etmeyin." },
-  { name: "Yakınlık", blurb: "En samimi kısım. Buraya geldiyseniz buluşma fena gitmiyor demektir." }
+  { name: "Isınma", blurb: "Tanışma faslı. Rahat sorular, rahat cevaplar." },
+  { name: "Derinleşme", blurb: "Biraz daha kişisel. Acele etmeyin." },
+  { name: "Yakınlık", blurb: "En samimi kısım. Buraya kadar geldiyseniz akşam güzel geçiyor demektir." },
+  { name: "Pas geçtikleriniz", blurb: "Şimdi pas geçtiğiniz kartları gösteriyoruz. Hâlâ hazır değilseniz yine geçebilirsiniz." }
 ];
 const Q = [
-  "Dünyadaki herkes arasından birini akşam yemeğine çağırabilsen kimi çağırırdın?",
-  "Ünlü olmak ister miydin? Neyle ünlü olmak isterdin?",
-  "Birini telefonla aramadan önce ne diyeceğini kafanda prova eder misin? Neden?",
-  "Senin için kusursuz bir gün nasıl geçerdi? Sabahtan akşama anlat.",
+  "Dünyada istediğin biriyle akşam yemeği yiyebilsen kimi seçerdin?",
+  "Ünlü olmak ister miydin? Ne için?",
+  "Birini aramadan önce ne diyeceğini kafanda prova eder misin? Neden?",
+  "Senin için mükemmel bir gün nasıl olurdu?",
   "En son ne zaman kendi kendine şarkı söyledin? Peki birine?",
-  "90 yaşına kadar yaşayacaksın. Son 60 yıl boyunca ya 30 yaşındaki zihnin ya da 30 yaşındaki bedenin seninle kalacak. Hangisini seçerdin?",
+  "90 yaşına kadar yaşayacaksın. Son 60 yıl boyunca ya 30 yaşındaki aklın ya da 30 yaşındaki bedenin seninle kalacak. Hangisini seçerdin?",
   "Nasıl öleceğine dair içten içe bir tahminin var mı?",
   "Aranızda ortak olduğunu düşündüğün üç şey söyle.",
-  "Hayatında en çok neye minnettarsın?",
-  "Nasıl yetiştirildiğinle ilgili bir şeyi değiştirebilseydin bu ne olurdu?",
-  "Hayat hikâyeni olabildiğince ayrıntılı anlat. Her birinize dört dakika.",
-  "Yarın sabah yeni bir yetenek ya da özellikle uyanabilsen bu ne olurdu?",
-  "Bir kristal küre sana kendinle, hayatınla ya da gelecekle ilgili her şeyin doğrusunu söyleyebilse ona ne sorardın?",
+  "Hayatında en çok neye şükrediyorsun?",
+  "Nasıl yetiştirildiğinle ilgili bir şeyi değiştirebilsen ne olurdu?",
+  "Dört dakikada hayat hikâyeni olabildiğince ayrıntılı anlat. Sonra sıra karşındakinde.",
+  "Yarın sabah yeni bir yetenekle uyanabilsen hangisi olsun isterdin?",
+  "Bir kristal küre sana kendin, hayatın ya da gelecek hakkında her şeyi söyleyebilse ona ne sorardın?",
   "Uzun zamandır yapmayı hayal ettiğin bir şey var mı? Neden hâlâ yapmadın?",
   "Hayatındaki en büyük başarın ne?",
-  "Bir arkadaşlıkta en çok neye değer verirsin?",
-  "Hayatındaki en değerli anı hangisi?",
-  "Hayatındaki en kötü anı hangisi?",
-  "Bir yıl sonra aniden öleceğini bilsen şu anki hayatında neyi değiştirirdin? Neden?",
+  "Bir arkadaşlıkta en çok neye önem verirsin?",
+  "En değerli anın ne?",
+  "En kötü anın ne?",
+  "Bir yıl sonra öleceğini bilsen hayatında neyi değiştirirdin? Neden?",
   "Arkadaşlık senin için ne demek?",
   "Sevgi ve şefkat hayatında ne kadar yer tutuyor?",
-  "Sırayla, karşındakinde sevdiğin bir özelliği söyleyin. Her biriniz beşer tane.",
+  "Sırayla, karşınızdakinin sevdiğiniz bir özelliğini söyleyin. Her biriniz beşer tane.",
   "Ailen ne kadar yakın ve sıcak? Çocukluğunun çoğu insanınkinden daha mutlu geçtiğini düşünüyor musun?",
-  "Annenle ilişkini nasıl anlatırsın?",
+  "Annenle aran nasıl?",
   "Her biriniz “biz” ile başlayan üç doğru cümle kursun. Mesela: “İkimiz de şu an bu masadayız ve biraz heyecanlıyız.”",
   "Şu cümleyi tamamla: “Keşke … paylaşabileceğim biri olsa.”",
   "Yakın arkadaş olsaydınız, karşındakinin senin hakkında bilmesi gereken en önemli şey ne olurdu?",
-  "Karşındakine onda neyi beğendiğini söyle. Bu sefer çok dürüst ol; yeni tanıştığın birine normalde söylemeyeceğin şeyleri söyle.",
-  "Hayatındaki utanç verici bir anı anlat.",
+  "Karşındakine onda neyi beğendiğini söyle. Bu sefer, yeni tanıştığın birine söylemeyeceğin kadar dürüst ol.",
+  "Başından geçen utanç verici bir anı anlat.",
   "En son ne zaman birinin yanında ağladın? Peki yalnızken?",
   "Karşındakine, onda şimdiden sevdiğin bir şeyi söyle.",
-  "Sence şakası yapılamayacak kadar ciddi bir şey var mı? Neler?",
-  "Bu akşam kimseyle konuşamadan ölecek olsan, birine söylemediğin için en çok neye pişman olurdun? Neden hâlâ söylemedin?",
-  "Evin, içindeki her şeyle birlikte yanıyor. Sevdiklerini ve evcil hayvanlarını kurtardın. Tek bir eşya için son bir kez içeri girebilirsin. Neyi alırdın? Neden?",
+  "Sence şakası yapılamayacak kadar ciddi bir konu var mı?",
+  "Bu gece kimseyle konuşamadan ölecek olsan, birine söylemediğin için en çok neye pişman olurdun? Neden hâlâ söylemedin?",
+  "Evin yanıyor. Sevdiklerin ve evcil hayvanların güvende. İçeri son bir kez girip tek bir eşya alabilirsin. Ne alırdın? Neden?",
   "Ailende kimi kaybetmek seni en çok sarsardı? Neden?",
-  "Kişisel bir sorununu anlat ve karşındakine onun yerinde olsa ne yapacağını sor. Sonra seçtiğin sorun hakkında nasıl hissediyor göründüğünü sana anlatmasını iste."
+  "Seni düşündüren kişisel bir meseleyi anlat ve karşındakine onun yerinde olsa ne yapacağını sor. Sonra senin bu konuda nasıl hissettiğini nasıl gördüğünü anlatsın."
 ];
 const NOTES = [
-  "Ölü ya da diri, fark etmez. “Annem” demek serbest ama biraz kolaya kaçış.",
-  "Bir videoyla viral olmak da sayılır mı, onu siz tartışın.",
-  "Restorana rezervasyon için ararken bile mi?",
-  "Bu akşamın o güne dahil olup olmadığını sormuyoruz. Şimdilik.",
-  "Duşta söylenenler de sayılır. Hangi şarkıydı?",
-  "Diz ağrısı mı, unutkanlık mı? Zor seçim.",
-  "Evet, ilk buluşma için biraz karanlık. Bunu biz değil, 1997'de bir psikolog seçti.",
-  "“İkimiz de şu an bu masadayız” kolaya kaçmak olur.",
-  "“Wi-Fi” cevabı teknik olarak doğru ama puan almaz.",
-  "Aileyi suçlama değil, merak etme sorusu.",
-  "Doğumdan bu akşama kadar. Sayacı başlatın, kısa kesmek yok.",
-  "Uçmak klişe ama geçerli.",
-  "Bu buluşmanın sonunu sormak serbest. Cesaret ister.",
-  "“Spor salonuna başlamak” kabul edilir ama alkış almaz.",
-  "Bu akşam alçakgönüllülük yasak. Övünün.",
-  "Not almak serbest, ileride işe yarayabilir.",
-  "Acele etmeyin, güzel bir anı düşünmeye değer.",
-  "Ağır bir soru. Anlatmak istemezsen pas tam bunun için var.",
-  "Cevabın “hiçbir şey” ise ya çok iyisin ya da kendini kandırıyorsun.",
-  "16. soruya benziyor ama aynı değil. Psikolog ısrar etmiş.",
-  "Sadece romantik olanı değil; aile, arkadaşlar, kedin de dahil.",
-  "“Gözlerin güzel” bir tanesi olabilir. Beşi birden olamaz.",
-  "Burada doğru cevap yok, sadece merak var.",
-  "Hassas bir konu olabilir. Pas her zaman masada.",
-  "Doğru olsun yeter, romantik olmak zorunda değil.",
-  "“Netflix şifresi” de bir cevap. Ama daha iyisini bulabilirsiniz.",
+  "Hayatta olması şart değil.",
+  "Hangi alanda olurdu, onu da söyle.",
+  "Restoranı ararken bile mi?",
+  "Kahvaltıdan başla.",
+  "Duşta söylenenler de sayılır.",
+  "Zor seçim. Acele etme.",
+  "İstersen ciddi cevapla, istersen gülüp geç.",
+  "Bu akşam fark ettiklerin de sayılır.",
+  "Küçük şeyler de olur.",
+  "Kimseyi suçlamak için değil, merak için.",
+  "Sayacı başlat, kısa kesmek yok.",
+  "Uçmak da olur, mükemmel makarna yapmak da.",
+  "Cevabını gerçekten bilmek istediğin bir şey olsun.",
+  "Bahane kabul, yargılamak yok.",
+  "Bu akşam alçakgönüllü olmak zorunda değilsin.",
+  "Cevabı dikkatle dinle, ileride işine yarayabilir.",
+  "Acele etme, güzel bir anı seç.",
+  "Anlatmak istemezsen pas geçebilirsin.",
+  "Cevap kısa olabilir, düşünmek uzun sürebilir.",
+  "16. soruya benziyor ama aynı değil.",
+  "Sadece romantik sevgi değil; aile ve arkadaşlar da.",
+  "Sadece dış görünüş olmasın.",
+  "Doğru cevabı yok.",
+  "Anlatmak istemezsen pas geçebilirsin.",
+  "Romantik olmak zorunda değil, doğru olsun yeter.",
+  "İlk aklına geleni söyle.",
   "Kendi kullanım kılavuzunun ilk sayfası gibi düşün.",
-  "Yanaklar kızarabilir. Normal, devam.",
-  "Ne kadar utanç verici, o kadar iyi. Gülmek serbest, dalga geçmek yasak.",
-  "Film sahneleri sayılır. Hangi film olduğunu da söyle.",
-  "“Şimdiden” diyoruz, yani bu akşam fark ettiğin bir şey.",
-  "Kimin mizahı kaldırabildiğini öğrenmenin tam zamanı.",
-  "Bu sorudan sonra o kişiye mesaj atmak serbest. Oyun bekler.",
-  "“Telefon” diyenler, şarj aletini de unutmayın.",
-  "Ağır bir soru. Son düzlüktesiniz, az kaldı.",
-  "Son kart. Dinlemek, cevap vermek kadar önemli."
+  "Yanakların kızarabilir. Devam et.",
+  "Gülmek serbest.",
+  "Film sahneleri de sayılır.",
+  "Bu akşam fark ettiğin bir şey olsun.",
+  "Kimin neye güldüğü çok şey anlatır.",
+  "Bu sorudan sonra o kişiye mesaj atmak serbest.",
+  "Telefon diyorsan, şarj aletini de unutma.",
+  "Son düzlüktesiniz.",
+  "Son soru. Dinlemek de cevap vermek kadar önemli."
 ];
-const PASS_LINES = [
-  "Kart destenin sonuna gitti. Kaçamazsınız, sadece erteleyebilirsiniz.",
-  "Pas! Bu kart birazdan geri gelecek.",
-  "Sorun değil. Herkesin bir “şimdi değil” sorusu vardır."
-];
-const TIMED = { 10: 240 }; // question index -> seconds
+const TIMED = { 10: 240 }; // soru sırası (0'dan başlar) -> saniye
 const EYE_SECONDS = 240;
-const KEY = "36soru.v2";
+const KEY = "36soru.v3";
 
 const app = document.getElementById("app");
 let S = fresh();
 let tick = null;
 let wakeLock = null;
+let flash = "";
 
 function fresh() {
-  return { screen: "start", names: ["", ""], level: 0, order: [[], [], []], pos: 0, flipped: false, passes: 0, seen: [], reads: 0, timer: null };
+  return { screen: "start", names: ["", ""], level: 0, pos: 0, flipped: false, turned: false, seen: [], passed: [], passRound: [], reads: 0, prev: "play", timer: null };
 }
-function deckFor(l) { return Array.from({ length: 12 }, (_, i) => l * 12 + i); }
+function deck(l) { return l === 3 ? S.passRound : Array.from({ length: 12 }, (_, i) => l * 12 + i); }
+function cur() { return deck(S.level)[S.pos]; }
 function save() { try { localStorage.setItem(KEY, JSON.stringify({ ...S, timer: null })); } catch (e) {} }
 function load() { try { const s = JSON.parse(localStorage.getItem(KEY)); return s && s.screen ? s : null; } catch (e) { return null; } }
 function clear() { try { localStorage.removeItem(KEY); } catch (e) {} }
 function name(i) { return (S.names[i] || "").trim() || (i === 0 ? "1. kişi" : "2. kişi"); }
 function esc(s) { return String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]); }
 function fmt(s) { const m = Math.floor(s / 60), r = s % 60; return m + ":" + String(r).padStart(2, "0"); }
+function drop(arr, q) { const i = arr.indexOf(q); if (i > -1) arr.splice(i, 1); }
 
 async function keepAwake() {
   try { if ("wakeLock" in navigator && !wakeLock) { wakeLock = await navigator.wakeLock.request("screen"); wakeLock.addEventListener("release", () => wakeLock = null); } } catch (e) {}
@@ -300,8 +296,9 @@ document.addEventListener("visibilitychange", () => { if (document.visibilitySta
 function go(screen) { stopTimer(); S.screen = screen; save(); render(); }
 
 function render() {
-  const r = { start: Start, level: Level, play: Play, list: List, eye: Eye, end: End }[S.screen];
+  const r = { start: Start, level: Level, play: Play, menu: Menu, eye: Eye, end: End }[S.screen];
   app.innerHTML = r();
+  flash = "";
   bind();
 }
 
@@ -311,83 +308,88 @@ function Start() {
   return `<section class="screen">
     <p class="eyebrow">İlk buluşma için kart oyunu</p>
     <h1>36 <em>Soru</em></h1>
-    <p class="lede">Psikolog Arthur Aron 1997'de iki yabancıyı 45 dakikada yakınlaştırmak için bu soruları hazırladı. Sizin elinizde bir akşam ve tek bir telefon var.</p>
+    <p class="lede">Psikolog Arthur Aron'un 1997'de iki yabancıyı birbirine yakınlaştırmak için hazırladığı sorular. Bir masa, iki kişi, tek telefon.</p>
     <ul class="rules">
-      <li><b>1</b><span>Telefonu ortaya koyun. Kartı çevirmek için dokunun.</span></li>
-      <li><b>2</b><span>Sırayla okuyun. Okuyan önce cevaplar, sonra diğeri.</span></li>
-      <li><b>3</b><span>Üç seviye var, sorular giderek samimileşir. Hazır değilseniz pas deyin. Canınız istediği karta da atlayabilirsiniz.</span></li>
-      <li><b>4</b><span>Sonunda 4 dakika konuşmadan göz göze bakarsınız.</span></li>
+      <li><b>1</b><span>Telefonu masanın ortasına koyun. Kartı açmak için dokunun.</span></li>
+      <li><b>2</b><span>Sırayla okuyun. Okuyan önce cevaplar.</span></li>
+      <li><b>3</b><span>Sorular giderek samimileşiyor. Hazır değilseniz pas geçin, o kartlar en sonda geri gelir.</span></li>
+      <li><b>4</b><span>Sırayla gitmek zorunda değilsiniz. Menüden istediğiniz soruyu seçebilirsiniz.</span></li>
+      <li><b>5</b><span>Sonunda 4 dakika konuşmadan göz göze bakıyorsunuz.</span></li>
     </ul>
     <div class="names">
-      <div class="field"><label for="n0">Sen</label><input id="n0" autocomplete="off" maxlength="18" placeholder="İsim (isteğe bağlı)" value="${esc(S.names[0])}"></div>
-      <div class="field"><label for="n1">O</label><input id="n1" autocomplete="off" maxlength="18" placeholder="İsim (isteğe bağlı)" value="${esc(S.names[1])}"></div>
+      <div class="field"><label for="n0">Sen</label><input id="n0" autocomplete="off" maxlength="18" placeholder="Adın (isteğe bağlı)" value="${esc(S.names[0])}"></div>
+      <div class="field"><label for="n1">O</label><input id="n1" autocomplete="off" maxlength="18" placeholder="Adı (isteğe bağlı)" value="${esc(S.names[1])}"></div>
     </div>
     <div class="spacer"></div>
     <div class="stack">
-      ${resume ? `<button class="btn" data-a="resume">Kaldığınız yerden devam edin (${(saved.seen || []).length}/36)</button>
-      <button class="btn ghost" data-a="start">Baştan başlayın</button>` : `<button class="btn" data-a="start">Oyuna başlayın</button>`}
+      ${resume ? `<button class="btn" data-a="resume">Kaldığımız yerden devam edelim (${(saved.seen || []).length}/36)</button>
+      <button class="btn ghost" data-a="start">Baştan başlayalım</button>` : `<button class="btn" data-a="start">Başlayalım</button>`}
     </div>
-    <p class="credit">Sorular: Aron, A. ve ark. (1997), “The Experimental Generation of Interpersonal Closeness”. Türkçe uyarlama. Hiçbir veri toplanmaz, ilerlemeniz sadece bu telefonda saklanır.</p>
+    <p class="credit">Sorular: Aron, A. ve ark. (1997), “The Experimental Generation of Interpersonal Closeness”. Türkçe uyarlama. Hiçbir veri toplanmıyor; ilerlemeniz sadece bu telefonda saklanıyor.</p>
   </section>`;
 }
 
 function Level() {
   const L = LEVELS[S.level];
+  const last = S.level === 3;
   return `<section class="screen center">
     <div class="spacer"></div>
-    <p class="eyebrow">Seviye</p>
-    <div class="level-num">${S.level + 1}</div>
+    <p class="eyebrow">${last ? "Son tur" : "Seviye"}</p>
+    <div class="level-num">${last ? S.passRound.length : S.level + 1}</div>
     <h2>${L.name}</h2>
     <p class="lede">${L.blurb}</p>
     <div class="spacer"></div>
-    <div class="stack" style="width:100%">
-      <button class="btn" data-a="begin">12 kartı açın</button>
-      <button class="link" data-a="list">Tüm kartları görün</button>
+    <div class="stack">
+      <button class="btn" data-a="begin">${last ? "Kartları göster" : "Başlayalım"}</button>
+      <button class="link" data-a="menu">Tüm soruları gör</button>
       <button class="link" data-a="home">Ana sayfa</button>
     </div>
   </section>`;
 }
 
 function Play() {
-  const deck = S.order[S.level];
-  const qi = deck[S.pos];
+  const d = deck(S.level);
+  const qi = cur();
   const reader = (S.reads || 0) % 2;
   const t = TIMED[qi];
   const pct = (S.seen.length / 36) * 100;
+  const where = S.level === 3 ? `Pas geçilenler · ${S.pos + 1}/${d.length}` : `Seviye ${S.level + 1} · ${S.pos + 1}/12`;
   return `<section class="screen">
     <div class="bar">
-      <button class="turn" data-a="list" aria-label="Tüm kartlar">☰ Seviye ${S.level + 1} · ${S.pos + 1}/12</button>
-      <div class="right"><button class="turn" data-a="turn" aria-pressed="${S.turned ? "true" : "false"}" aria-label="Kartı karşıdaki kişiye çevir">↻ Karşıya çevir</button></div>
+      <button class="chip" data-a="menu" aria-label="Tüm sorular">☰ ${where}</button>
+      <button class="chip" data-a="turn" aria-pressed="${S.turned ? "true" : "false"}" aria-label="Kartı karşıdaki kişiye çevir">↻ Karşıya çevir</button>
     </div>
     <div class="progress"><i style="width:${pct}%"></i></div>
     <div class="table">
-      <div class="card ${S.flipped ? "flipped" : "enter"} ${S.turned ? "turned" : ""}" id="card" role="button" tabindex="0" aria-label="${S.flipped ? "Soru kartı" : "Kartı çevirin"}">
-        <div class="face back"><div class="mark">${qi + 1}</div><div class="hint">Çevirmek için dokunun<br>Sıra: <b>${esc(name(reader))}</b></div></div>
+      <div class="card ${S.flipped ? "flipped" : "enter"} ${S.turned ? "turned" : ""}" id="card" role="button" tabindex="0" aria-label="${S.flipped ? "Soru kartı" : "Kartı aç"}">
+        <div class="face back"><div class="mark">${qi + 1}</div><div class="hint">Açmak için dokun<br>Sıra: <b>${esc(name(reader))}</b></div></div>
         <div class="face front">
-          <div class="top"><span>Seviye ${S.level + 1}</span><span class="num">${qi + 1}</span></div>
+          <div class="top"><span>${S.level === 3 ? "Pas geçilen" : "Seviye " + (S.level + 1)}</span><span class="num">${qi + 1}</span></div>
           <div class="q">${esc(Q[qi])}</div>
           <div class="note">${esc(NOTES[qi])}</div>
           ${t ? `<div class="timer-row"><button class="btn small" data-a="timer">${S.timer ? "Durdur" : "Sayacı başlat"}</button><span class="clock" id="clock">${fmt(S.timer ? S.timer.left : t)}</span></div>` : ""}
-          <div class="who">Okuyan ve önce cevaplayan: <b>${esc(name(reader))}</b></div>
+          <div class="who">Önce cevaplayan: <b>${esc(name(reader))}</b></div>
         </div>
       </div>
     </div>
     <div class="controls">
       <button class="btn ghost small" data-a="back" ${S.level === 0 && S.pos === 0 ? "disabled" : ""} aria-label="Önceki kart">←</button>
-      <button class="btn ghost" data-a="pass" ${!S.flipped || S.pos === deck.length - 1 ? "disabled" : ""}>Pas</button>
+      <button class="btn ghost" data-a="pass" ${!S.flipped ? "disabled" : ""}>Pas</button>
       <button class="btn" data-a="next" ${!S.flipped ? "disabled" : ""}>Sonraki</button>
     </div>
-    <p class="toast" id="toast">${S.flipped ? "" : "Kartı çevirince butonlar açılır"}</p>
+    <p class="toast" id="toast">${flash || (S.flipped ? "" : "Kartı açınca butonlar aktif olur")}</p>
   </section>`;
 }
 
-function List() {
-  const cur = S.prev === "play" ? S.order[S.level][S.pos] : -1;
+function Menu() {
+  const curQ = S.prev === "play" ? cur() : -1;
   return `<section class="screen">
-    <div class="bar"><h2 style="font-size:30px">Tüm kartlar</h2><button class="btn ghost small" data-a="close">Kapat</button></div>
-    <p class="lede" style="font-size:15px">İstediğiniz karta atlayın. Açtıklarınız soluk görünür.</p>
-    ${LEVELS.map((L, l) => `<div class="grp"><p class="eyebrow">Seviye ${l + 1} · ${L.name}</p><div class="grid">${deckFor(l).map(q =>
-      `<button class="tile ${S.seen.includes(q) ? "seen" : ""} ${q === cur ? "cur" : ""}" data-a="jump" data-q="${q}" aria-label="Soru ${q + 1}">${q + 1}</button>`).join("")}</div></div>`).join("")}
+    <div class="bar menu-head"><h2 style="font-size:30px">Tüm sorular</h2><button class="btn ghost small" data-a="close">Kapat</button></div>
+    <p class="lede" style="font-size:15px">Hangisini istiyorsanız ona dokunun.</p>
+    ${[0, 1, 2].map(l => `<div class="grp"><p class="eyebrow">Seviye ${l + 1} · ${LEVELS[l].name}</p><div class="qlist">${deck(l).map(q => {
+      const tag = S.passed.includes(q) ? `<span class="tag pass">Pas</span>` : S.seen.includes(q) ? `<span class="tag">Açıldı</span>` : "<span></span>";
+      return `<button class="qrow ${S.seen.includes(q) && !S.passed.includes(q) ? "seen" : ""} ${q === curQ ? "cur" : ""}" data-a="jump" data-q="${q}"><span class="qn">${q + 1}</span><span class="qt">${esc(Q[q])}</span>${tag}</button>`;
+    }).join("")}</div></div>`).join("")}
   </section>`;
 }
 
@@ -396,20 +398,20 @@ function Eye() {
   const C = 2 * Math.PI * 46;
   return `<section class="screen center">
     <p class="eyebrow">Son adım</p>
-    <h2>4 dakika, hiç konuşmadan</h2>
-    <p class="lede">Telefonu kenara bırakın ve birbirinizin gözlerine bakın. Garip gelecek. Gülmek serbest, kaçmak yasak.</p>
+    <h2>4 dakika, <em>tek kelime etmeden</em></h2>
+    <p class="lede">Telefonu bırakın ve birbirinizin gözlerine bakın. İlk başta garip gelebilir, gülmek serbest.</p>
     <div class="ring">
       <svg viewBox="0 0 100 100" aria-hidden="true">
-        <circle cx="50" cy="50" r="46" fill="none" stroke="rgba(243,236,223,.14)" stroke-width="3"></circle>
-        <circle id="arc" cx="50" cy="50" r="46" fill="none" stroke="#d3a35c" stroke-width="3" stroke-linecap="round"
+        <circle cx="50" cy="50" r="46" fill="none" stroke="rgba(247,236,230,.14)" stroke-width="3"></circle>
+        <circle id="arc" cx="50" cy="50" r="46" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
           stroke-dasharray="${C}" stroke-dashoffset="${C * (1 - left / EYE_SECONDS)}"></circle>
       </svg>
       <div class="t" id="clock">${fmt(left)}</div>
     </div>
     <div class="spacer"></div>
-    <div class="stack" style="width:100%">
-      <button class="btn" data-a="eye">${S.timer ? "Durdur" : left < EYE_SECONDS ? "Devam edin" : "Başlatın"}</button>
-      <button class="link" data-a="finish">Atla ve bitir</button>
+    <div class="stack">
+      <button class="btn" data-a="eye">${S.timer ? "Durdur" : left < EYE_SECONDS ? "Devam et" : "Başlat"}</button>
+      <button class="link" data-a="finish">Geç ve bitir</button>
     </div>
   </section>`;
 }
@@ -419,12 +421,12 @@ function End() {
     <div class="spacer"></div>
     <p class="eyebrow">Bitti</p>
     <h1 style="font-size:64px">36 / <em>36</em></h1>
-    <p class="lede">${esc(name(0))} ve ${esc(name(1))}, 36 soruyu birlikte bitirdiniz${S.passes ? ` (${S.passes} pas dahil, kimseye söylemeyiz)` : ""}. Deneydeki çiftlerden biri altı ay sonra evlenmiş. Baskı yapmıyoruz, sadece söylüyoruz.</p>
+    <p class="lede">${esc(name(0))} ve ${esc(name(1))}, oyunu bitirdiniz. Aron'un deneyindeki çiftlerden biri altı ay sonra evlenmiş. Baskı yapmıyoruz, sadece söylüyoruz.</p>
     <div class="spacer"></div>
-    <div class="stack" style="width:100%">
-      <button class="btn" data-a="restart">Yeniden oynayın</button>
+    <div class="stack">
+      <button class="btn" data-a="restart">Yeniden oyna</button>
     </div>
-    <p class="credit">Arkadaşlarınıza önermek isterseniz bu sayfanın linkini paylaşmanız yeterli.</p>
+    <p class="credit">Beğendiyseniz bu sayfanın linkini arkadaşlarınızla paylaşabilirsiniz.</p>
   </section>`;
 }
 
@@ -440,42 +442,51 @@ function startTimer(seconds, onTick, onDone) {
 }
 function stopTimer() { if (tick) clearInterval(tick); tick = null; }
 function pauseTimer() { stopTimer(); if (S.timer) S.timer = { left: S.timer.left }; }
-
 function buzz() { try { navigator.vibrate && navigator.vibrate([200, 100, 200]); } catch (e) {} }
+
+// Bir sonraki karta, seviyeye ya da pas geçilenler turuna geçer.
+function step() {
+  S.flipped = false; S.turned = false; S.timer = null; S.reads = (S.reads || 0) + 1;
+  if (S.pos < deck(S.level).length - 1) { S.pos++; go("play"); }
+  else if (S.level < 2) { S.level++; S.pos = 0; go("level"); }
+  else if (S.level === 2 && S.passed.length) { S.passRound = [...S.passed]; S.level = 3; S.pos = 0; go("level"); }
+  else { go("eye"); }
+}
 
 function act(a, el) {
   if (a === "start") {
     const n = [document.getElementById("n0")?.value || "", document.getElementById("n1")?.value || ""];
-    S = fresh(); S.names = n; S.order = [0, 1, 2].map(deckFor);
+    S = fresh(); S.names = n;
     keepAwake(); go("level");
   } else if (a === "resume") {
     S = { ...fresh(), ...load(), timer: null }; keepAwake(); render();
   } else if (a === "home") { stopTimer(); S.screen = "start"; render(); }
   else if (a === "begin") { S.pos = 0; S.flipped = false; go("play"); }
   else if (a === "turn") { S.turned = !S.turned; save(); render(); }
-  else if (a === "flip") { if (!S.flipped) { S.flipped = true; const q = S.order[S.level][S.pos]; if (!S.seen.includes(q)) S.seen.push(q); save(); render(); } }
-  else if (a === "list") { stopTimer(); S.timer = null; S.prev = S.screen; S.screen = "list"; render(); window.scrollTo(0, 0); }
-  else if (a === "close") { go(S.prev || "play"); }
-  else if (a === "jump") {
-    const q = +el.dataset.q, l = Math.floor(q / 12);
-    S.level = l; S.pos = S.order[l].indexOf(q); S.flipped = false; S.turned = false; S.reads = (S.reads || 0) + 1; go("play");
-  }
-  else if (a === "next") { S.timer = null; advance(); }
+  else if (a === "flip") {
+    if (!S.flipped) { S.flipped = true; const q = cur(); if (!S.seen.includes(q)) S.seen.push(q); save(); render(); }
+  } else if (a === "next") { drop(S.passed, cur()); step(); }
   else if (a === "pass") {
-    const d = S.order[S.level]; const [c] = d.splice(S.pos, 1); d.push(c);
-    S.passes++; S.flipped = false; S.turned = false; S.timer = null; save(); render();
-    const t = document.getElementById("toast"); if (t) t.textContent = PASS_LINES[S.passes % PASS_LINES.length];
+    if (S.level < 3) { const q = cur(); if (!S.passed.includes(q)) S.passed.push(q); flash = "Bu kartı en sona sakladık."; }
+    else { drop(S.passed, cur()); }
+    step();
   } else if (a === "back") {
     S.timer = null;
-    if (S.pos > 0) S.pos--; else if (S.level > 0) { S.level--; S.pos = 11; }
-    S.reads = Math.max(0, (S.reads || 0) - 1); S.turned = false;
-    S.flipped = true; go("play");
+    if (S.pos > 0) S.pos--;
+    else if (S.level > 0) { S.level--; S.pos = deck(S.level).length - 1; }
+    S.reads = Math.max(0, (S.reads || 0) - 1); S.turned = false; S.flipped = true; go("play");
+  } else if (a === "menu") {
+    stopTimer(); S.timer = null; S.prev = S.screen; S.screen = "menu"; render(); window.scrollTo(0, 0);
+  } else if (a === "close") { go(S.prev || "play"); window.scrollTo(0, 0); }
+  else if (a === "jump") {
+    const q = +el.dataset.q;
+    S.level = Math.floor(q / 12); S.pos = q % 12; S.flipped = false; S.turned = false; S.reads = (S.reads || 0) + 1;
+    go("play"); window.scrollTo(0, 0);
   } else if (a === "timer") {
     if (tick) { pauseTimer(); render(); }
     else {
-      const qi = S.order[S.level][S.pos];
-      startTimer(TIMED[qi], l => { const c = document.getElementById("clock"); if (c) c.textContent = fmt(l); },
-        () => { buzz(); render(); const t = document.getElementById("toast"); if (t) t.textContent = "Süre doldu. Sıra diğer kişide."; });
+      startTimer(TIMED[cur()], l => { const c = document.getElementById("clock"); if (c) c.textContent = fmt(l); },
+        () => { buzz(); flash = "Süre bitti, sıra diğerinde."; render(); });
       render();
     }
   } else if (a === "eye") {
@@ -492,13 +503,6 @@ function act(a, el) {
   else if (a === "restart") { const n = S.names; clear(); S = fresh(); S.names = n; render(); }
 }
 
-function advance() {
-  S.flipped = false; S.turned = false; S.reads = (S.reads || 0) + 1;
-  if (S.pos < 11) { S.pos++; go("play"); }
-  else if (S.level < 2) { S.level++; S.pos = 0; go("level"); }
-  else { S.pos = 12; S.level = 2; go("eye"); }
-}
-
 function bind() {
   app.querySelectorAll("[data-a]").forEach(b => b.addEventListener("click", e => { e.stopPropagation(); act(b.dataset.a, b); }));
   const card = document.getElementById("card");
@@ -509,11 +513,7 @@ function bind() {
   ["n0", "n1"].forEach((id, i) => { const el = document.getElementById(id); if (el) el.addEventListener("input", () => { S.names[i] = el.value; }); });
 }
 
-function start(data) {
-  if (data && data.S) { S = { ...data.S, timer: null }; }
-  render();
-}
-start({});
+render();
 </script>
 </body>
 </html>
