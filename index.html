@@ -15,10 +15,16 @@
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Manrope:wght@400;500;700&display=swap">
+<link rel="preload" href="fonts/dm-serif-display-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
 <style>
+/* Yazı tipleri sitenin kendi klasöründen yükleniyor; ziyaretçiler Google'a bağlanmıyor. */
+@font-face { font-family: "DM Serif Display"; font-style: normal; font-weight: 400; font-display: swap; src: url(fonts/dm-serif-display-latin-ext.woff2) format("woff2"); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+@font-face { font-family: "DM Serif Display"; font-style: normal; font-weight: 400; font-display: swap; src: url(fonts/dm-serif-display-latin.woff2) format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "DM Serif Display"; font-style: italic; font-weight: 400; font-display: swap; src: url(fonts/dm-serif-display-italic-latin-ext.woff2) format("woff2"); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+@font-face { font-family: "DM Serif Display"; font-style: italic; font-weight: 400; font-display: swap; src: url(fonts/dm-serif-display-italic-latin.woff2) format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "Manrope"; font-style: normal; font-weight: 400 700; font-display: swap; src: url(fonts/manrope-latin-ext.woff2) format("woff2"); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+@font-face { font-family: "Manrope"; font-style: normal; font-weight: 400 700; font-display: swap; src: url(fonts/manrope-latin.woff2) format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
 /* Layout: one phone on a restaurant table. A cream card on soft blush, deep wine type; the rose-red card back is the one bold note. */
 :root {
   --bg: #f8dcd5;
@@ -104,6 +110,11 @@ summary::-webkit-details-marker { display: none; }
 summary::after { content: "+"; flex: none; width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; background: rgba(255,255,255,.5); color: var(--rose); font-size: 18px; font-weight: 500; transition: transform .2s ease; }
 details[open] summary::after { transform: rotate(45deg); }
 details p { padding: 0 2px 18px; color: var(--mute); font-size: 15px; max-width: 60ch; }
+.foot { display: grid; gap: 6px; padding-top: 8px; }
+details.privacy { border: 0; }
+.privacy summary { justify-content: flex-start; font-size: 13px; font-weight: 500; color: var(--mute); padding: 6px 0; }
+.privacy summary::after { width: 22px; height: 22px; font-size: 14px; }
+.privacy p { font-size: 13px; padding-bottom: 8px; }
 
 /* intro */
 .steps { display: grid; gap: 14px; padding: 0; margin: 0; list-style: none; }
@@ -290,7 +301,7 @@ const FAQ = [
   ["Sevgilimle de oynayabilir miyim?", "Elbette. Uzun süredir birlikte olan çiftler de bu sorularla birbirleri hakkında yeni şeyler öğreniyor."],
   ["Ne kadar sürer?", "Genelde 45 dakika ile bir saat arası. Acele etmeyin, süre önemli değil."],
   ["Sırayla gitmek zorunda mıyız?", "Hayır, menüden istediğiniz soruyu seçebilirsiniz. Yine de sırayla gitmek, soruların yavaş yavaş derinleşmesi için en iyisi."],
-  ["Cevaplarımız bir yere kaydediliyor mu?", "Hayır. Hiçbir şey bir sunucuya gönderilmiyor; ilerlemeniz sadece bu telefonda kalıyor."]
+  ["Cevaplarımız bir yere kaydediliyor mu?", "Hayır. Cevaplarınızı zaten sesli veriyorsunuz; sitede yazılan bir şey yok. İlerlemeniz sadece bu telefonda kalıyor."]
 ];
 const ICONS = {
   phone: '<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="10" y="4" width="12" height="20" rx="2.5"/><path d="M14.5 20.5h3M3 28h26"/></svg>',
@@ -298,6 +309,8 @@ const ICONS = {
   pass: '<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 16a11 11 0 0 1 19-7.5M27 16a11 11 0 0 1-19 7.5"/><path d="M24.5 3.5v5h-5M7.5 28.5v-5h5"/></svg>',
   eye: '<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 16s4.5-8.5 13-8.5S29 16 29 16s-4.5 8.5-13 8.5S3 16 3 16z"/><circle cx="16" cy="16" r="4"/></svg>'
 };
+// Ziyaretçi sayacı (GoatCounter). Hesap kodunu buraya yazın, örn. "36soru". Boşsa sayaç çalışmaz.
+const GOATCOUNTER = "";
 const TIMED = { 10: 240 }; // soru sırası (0'dan başlar) -> saniye
 const EYE_SECONDS = 240;
 const KEY = "36soru.v3";
@@ -319,6 +332,14 @@ function clear() { try { localStorage.removeItem(KEY); } catch (e) {} }
 function name(i) { return (S.names[i] || "").trim() || (i === 0 ? "1. kişi" : "2. kişi"); }
 function esc(s) { return String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]); }
 function fmt(s) { const m = Math.floor(s / 60), r = s % 60; return m + ":" + String(r).padStart(2, "0"); }
+function track(path, title) { try { window.goatcounter?.count?.({ path, title, event: true }); } catch (e) {} }
+function loadCounter() {
+  if (!GOATCOUNTER) return;
+  const sc = document.createElement("script");
+  sc.async = true; sc.src = "https://gc.zgo.at/count.js";
+  sc.dataset.goatcounter = `https://${GOATCOUNTER}.goatcounter.com/count`;
+  document.head.appendChild(sc);
+}
 function drop(arr, q) { const i = arr.indexOf(q); if (i > -1) arr.splice(i, 1); }
 
 async function keepAwake() {
@@ -354,7 +375,10 @@ function Start() {
       <h2>Merak edilenler</h2>
       ${FAQ.map(([q, a]) => `<details><summary>${q}</summary><p>${a}</p></details>`).join("")}
     </div>
-    <p class="credit">Sorular: Aron, A. ve ark. (1997), “The Experimental Generation of Interpersonal Closeness”. Türkçe uyarlama.</p>
+    <div class="foot">
+      <p class="credit">Sorular: Aron, A. ve ark. (1997), “The Experimental Generation of Interpersonal Closeness”. Türkçe uyarlama.</p>
+      <details class="privacy"><summary>Gizlilik</summary><p>Çerez kullanmıyoruz ve sizi tanımlayan hiçbir bilgi toplamıyoruz. Oyundaki ilerlemeniz yalnızca bu telefonun tarayıcısında saklanır, bize gönderilmez. Kaç kişinin siteyi ziyaret ettiğini görmek için çerez kullanmayan GoatCounter'ı kullanıyoruz; yalnızca ziyaret sayısı, cihaz türü ve hangi siteden geldiğiniz gibi anonim bilgiler sayılır. Site GitHub Pages üzerinde barınır ve GitHub teknik sunucu kayıtları tutabilir.</p></details>
+    </div>
   </section>`;
 }
 
@@ -504,7 +528,7 @@ function step() {
   if (S.pos < deck(S.level).length - 1) { S.pos++; go("play"); }
   else if (S.level < 2) { S.level++; S.pos = 0; go("level"); }
   else if (S.level === 2 && S.passed.length) { S.passRound = [...S.passed]; S.level = 3; S.pos = 0; go("level"); }
-  else { go("eye"); }
+  else { track("sorular-bitti", "36 soru bitti"); go("eye"); }
 }
 
 function act(a, el) {
@@ -512,7 +536,7 @@ function act(a, el) {
   else if (a === "ready") {
     const n = [document.getElementById("n0")?.value || "", document.getElementById("n1")?.value || ""];
     S = fresh(); S.names = n;
-    keepAwake(); go("level");
+    keepAwake(); track("oyun-basladi", "Oyun başladı"); go("level");
   } else if (a === "resume") {
     S = { ...fresh(), ...load(), timer: null }; keepAwake(); render();
   } else if (a === "home") { stopTimer(); S.screen = "start"; render(); window.scrollTo(0, 0); }
@@ -551,7 +575,7 @@ function act(a, el) {
       startTimer(EYE_SECONDS, l => {
         const c = document.getElementById("clock"); if (c) c.textContent = fmt(l);
         const arc = document.getElementById("arc"); if (arc) arc.setAttribute("stroke-dashoffset", C * (1 - l / EYE_SECONDS));
-      }, () => { buzz(); go("end"); });
+      }, () => { buzz(); track("goz-temasi-bitti", "Göz teması bitti"); go("end"); });
       render();
     }
   } else if (a === "finish") { S.timer = null; go("end"); }
@@ -569,6 +593,7 @@ function bind() {
 }
 
 render();
+loadCounter();
 </script>
 </body>
 </html>
