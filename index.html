@@ -364,6 +364,45 @@ function render() {
   app.innerHTML = r();
   flash = "";
   bind();
+  if (S.screen === "end" && lastScreen !== "end") confetti();
+  lastScreen = S.screen;
+}
+
+// Bitiş ekranında yukarıdan yağan konfeti. Hareketi azaltma ayarı açık olan telefonlarda çalışmaz.
+let lastScreen = "";
+function confetti() {
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const c = document.createElement("canvas");
+  c.style.cssText = "position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:50";
+  document.body.appendChild(c);
+  const x = c.getContext("2d"), dpr = Math.min(devicePixelRatio || 1, 2);
+  const W = innerWidth, H = innerHeight; c.width = W * dpr; c.height = H * dpr; x.scale(dpr, dpr);
+  const colors = ["#b8364c", "#6b1d2e", "#e88a9a", "#f4b8c1", "#fffaf7", "#d9a35b"];
+  const bits = Array.from({ length: 150 }, () => ({
+    x: Math.random() * W, y: -20 - Math.random() * H * 0.8,
+    w: 6 + Math.random() * 5, h: 9 + Math.random() * 7,
+    vy: 110 + Math.random() * 120, sway: 20 + Math.random() * 40, phase: Math.random() * 6.3,
+    rot: Math.random() * 6.3, spin: (Math.random() - .5) * 8,
+    color: colors[Math.floor(Math.random() * colors.length)], round: Math.random() < .3
+  }));
+  const LIFE = 5.5; let t0 = null, prev = 0;
+  function frame(now) {
+    if (t0 === null) { t0 = prev = now; }
+    const t = (now - t0) / 1000, dt = Math.min((now - prev) / 1000, .05); prev = now;
+    x.clearRect(0, 0, W, H);
+    x.globalAlpha = t > LIFE - 1 ? Math.max(0, LIFE - t) : 1;
+    for (const b of bits) {
+      b.y += b.vy * dt; b.rot += b.spin * dt;
+      const bx = b.x + Math.sin(t * 2 + b.phase) * b.sway;
+      x.save(); x.translate(bx, b.y); x.rotate(b.rot); x.scale(1, Math.cos(t * 4 + b.phase));
+      x.fillStyle = b.color;
+      if (b.round) { x.beginPath(); x.arc(0, 0, b.w / 2, 0, 6.3); x.fill(); }
+      else x.fillRect(-b.w / 2, -b.h / 2, b.w, b.h);
+      x.restore();
+    }
+    if (t < LIFE && c.isConnected) requestAnimationFrame(frame); else c.remove();
+  }
+  requestAnimationFrame(frame);
 }
 
 function Start() {
