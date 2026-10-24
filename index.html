@@ -551,9 +551,20 @@ function act(a, el) {
     S = { ...fresh(), ...load(), timer: null }; keepAwake(); render();
   } else if (a === "home") { stopTimer(); S.screen = "start"; render(); window.scrollTo(0, 0); }
   else if (a === "begin") { S.pos = 0; S.flipped = false; go("play"); }
-  else if (a === "turn") { S.turned = !S.turned; save(); render(); }
-  else if (a === "flip") {
-    if (!S.flipped) { S.flipped = true; const q = cur(); if (!S.seen.includes(q)) S.seen.push(q); save(); render(); }
+  // Çevirme ve açma, kartı yeniden çizmeden yerinde yapılır; böylece animasyon kesilmeden akar.
+  else if (a === "turn") {
+    S.turned = !S.turned; save();
+    const card = document.getElementById("card");
+    if (card) { card.classList.remove("enter"); card.classList.toggle("turned", S.turned); }
+    el.setAttribute("aria-pressed", S.turned ? "true" : "false");
+  } else if (a === "flip") {
+    if (S.flipped) return;
+    S.flipped = true; const q = cur(); if (!S.seen.includes(q)) S.seen.push(q); save();
+    const card = document.getElementById("card");
+    card.classList.remove("enter"); card.classList.add("flipped"); card.setAttribute("aria-label", "Soru kartı");
+    app.querySelectorAll('[data-a="pass"], [data-a="next"]').forEach(b => b.disabled = false);
+    const t = document.getElementById("toast"); if (t) t.textContent = "";
+    const bar = app.querySelector(".progress i"); if (bar) bar.style.width = (S.seen.length / 36 * 100) + "%";
   } else if (a === "next") { drop(S.passed, cur()); step(); }
   else if (a === "pass") {
     if (S.level < 3) { const q = cur(); if (!S.passed.includes(q)) S.passed.push(q); flash = "Bu kartı en sona sakladık."; }
