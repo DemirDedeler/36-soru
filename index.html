@@ -28,7 +28,6 @@
 /* Layout: one phone on a restaurant table. A cream card on soft blush, deep wine type; the rose-red card back is the one bold note. */
 :root {
   --bg: #f8dcd5;
-  --bg-2: #f1bfb5;
   --ink: #4a1622;
   --mute: #7d4552;
   --rose: #b8364c;
@@ -42,20 +41,25 @@
 }
 *, *::before, *::after { box-sizing: border-box; }
 html, body { min-height: 100%; }
-html { padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); background: var(--bg-2); }
+html { padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); background: var(--bg); }
 [hidden] { display: none !important; }
 body {
   margin: 0;
-  background: radial-gradient(130% 70% at 50% 0%, #fdebe6 0%, var(--bg) 55%, var(--bg-2) 100%) top / 100% 100vh no-repeat, var(--bg-2);
+  position: relative;
+  background: var(--bg);
   color: var(--ink);
   font-family: var(--body);
   font-size: 16px;
   line-height: 1.5;
   -webkit-tap-highlight-color: transparent;
 }
+/* Üstte yumuşak bir ışık: düz zemine doğru eriyerek kaybolur, böylece hiçbir ekran boyunda çizgi oluşmaz. */
+body::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 75vh; pointer-events: none; background: radial-gradient(120% 90% at 50% 0%, #fdeee9 0%, rgba(253,238,233,0) 70%); }
 .app {
+  position: relative;
   max-width: 460px;
-  min-height: 100%;
+  min-height: 100vh;
+  min-height: calc(100svh - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px));
   margin: 0 auto;
   padding-inline: 18px;
   padding-block: 20px 28px;
